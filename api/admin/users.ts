@@ -61,7 +61,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         return;
       }
 
-      return res.status(405).json({ error: 'Method not allowed' });
+      res.status(405).json({ error: 'Method not allowed' });
     } catch (error) {
       console.error('Users management error:', error);
       res.status(500).json({ error: 'Failed to manage users' });

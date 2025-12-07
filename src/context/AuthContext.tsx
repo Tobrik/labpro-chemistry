@@ -77,6 +77,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       // Update display name
       if (userCredential.user) {
         await firebaseUpdateProfile(userCredential.user, { displayName });
+
+        // Create user document in Firestore via backend
+        const idToken = await userCredential.user.getIdToken();
+        await fetch('/api/auth/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${idToken}`,
+          },
+          body: JSON.stringify({
+            uid: userCredential.user.uid,
+            email: userCredential.user.email,
+            displayName,
+          }),
+        });
       }
     } catch (error: any) {
       console.error('Registration error:', error);

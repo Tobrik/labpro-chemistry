@@ -79,13 +79,41 @@ firebase deploy
 
 **ВАЖНО:** API ключи защищены `.gitignore`. Никогда не коммитьте секретные данные!
 
+## 🧪 Тестирование
+
+Проект включает E2E тесты на **Playwright** для Chrome:
+
+```bash
+# Установите браузеры Playwright
+npx playwright install chromium
+
+# Запустите все тесты
+npm test
+
+# Запустите в UI режиме (рекомендуется)
+npm run test:ui
+
+# Запустите с видимым браузером
+npm run test:headed
+```
+
+**Покрытие:**
+- ✅ Periodic Table (поиск, фильтрация, модальные окна)
+- ✅ Authentication (вход, регистрация, валидация)
+- ✅ AI Features (UI тесты + mock тесты)
+
+**Подробная документация:** [TESTING.md](TESTING.md)
+
 ## 📚 Структура
 
 ```
 labpro/
-├── src/              # Frontend
-├── functions/src/    # Backend API
+├── src/              # Frontend React app
+├── api/              # Vercel Serverless API
+├── functions/src/    # Firebase Cloud Functions (опционально)
+├── tests/            # Playwright E2E тесты
 ├── firebase.json     # Firebase config
+├── vercel.json       # Vercel config
 └── firestore.rules   # Security rules
 ```
 

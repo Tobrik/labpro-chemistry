@@ -11,18 +11,23 @@ const PeriodicTable: React.FC = () => {
   const [selectedElement, setSelectedElement] = useState<ElementData | null>(null);
   const [detailedInfo, setDetailedInfo] = useState<DetailedElementData | null>(null);
   const [loadingDetails, setLoadingDetails] = useState(false);
+  const [detailsError, setDetailsError] = useState<string | null>(null);
   const [tab, setTab] = useState<'info' | 'timeline'>('info');
 
   useEffect(() => {
     if (selectedElement) {
       setDetailedInfo(null);
+      setDetailsError(null);
       setLoadingDetails(true);
       getElementDetailsAI(selectedElement.name)
         .then(data => {
           setDetailedInfo(data);
           setLoadingDetails(false);
         })
-        .catch(() => setLoadingDetails(false));
+        .catch((error) => {
+          setLoadingDetails(false);
+          setDetailsError(error.message || 'Ошибка загрузки данных. Пожалуйста, войдите в аккаунт для использования AI функций.');
+        });
     }
   }, [selectedElement]);
 
@@ -169,6 +174,16 @@ const PeriodicTable: React.FC = () => {
                  <div className="flex flex-col items-center justify-center py-10 text-slate-400">
                    <Loader2 size={32} className="animate-spin mb-3 text-indigo-500" />
                    <p>Загрузка подробной информации...</p>
+                 </div>
+               )}
+
+               {!loadingDetails && detailsError && (
+                 <div className="flex flex-col items-center justify-center py-10">
+                   <div className="bg-red-50 border border-red-200 rounded-xl p-6 max-w-md text-center">
+                     <p className="text-red-600 font-medium mb-2">⚠️ Ошибка загрузки</p>
+                     <p className="text-sm text-red-500">{detailsError}</p>
+                     <p className="text-xs text-slate-500 mt-3">Войдите в аккаунт для использования AI функций</p>
+                   </div>
                  </div>
                )}
 

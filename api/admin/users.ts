@@ -29,7 +29,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           ...doc.data(),
         }));
 
-        return res.status(200).json({ users, page, limit });
+        res.status(200).json({ users, page, limit });
+        return;
       }
 
       if (req.method === 'PUT') {
@@ -37,11 +38,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const { userId, role } = req.body;
 
         if (!userId || !role || (role !== 'admin' && role !== 'user')) {
-          return res.status(400).json({ error: 'Invalid request' });
+          res.status(400).json({ error: 'Invalid request' });
+          return;
         }
 
         await db.collection('users').doc(userId).update({ role });
-        return res.status(200).json({ success: true });
+        res.status(200).json({ success: true });
+        return;
       }
 
       if (req.method === 'DELETE') {
@@ -49,11 +52,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const { userId } = req.body;
 
         if (!userId) {
-          return res.status(400).json({ error: 'Invalid request' });
+          res.status(400).json({ error: 'Invalid request' });
+          return;
         }
 
         await db.collection('users').doc(userId).update({ isActive: false });
-        return res.status(200).json({ success: true });
+        res.status(200).json({ success: true });
+        return;
       }
 
       return res.status(405).json({ error: 'Method not allowed' });

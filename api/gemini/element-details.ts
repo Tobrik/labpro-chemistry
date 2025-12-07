@@ -15,7 +15,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { elementName } = req.body as ElementDetailsRequest;
 
       if (!elementName || typeof elementName !== 'string') {
-        return res.status(400).json({ error: 'Invalid element name' });
+        res.status(400).json({ error: 'Invalid element name' });
+        return;
       }
 
       const result = await getElementDetails(elementName);

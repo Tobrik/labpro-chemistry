@@ -15,7 +15,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { substanceA, substanceB } = req.body as CompareSubstancesRequest;
 
       if (!substanceA || !substanceB || typeof substanceA !== 'string' || typeof substanceB !== 'string') {
-        return res.status(400).json({ error: 'Invalid substances' });
+        res.status(400).json({ error: 'Invalid substances' });
+        return;
       }
 
       const result = await compareSubstances(substanceA, substanceB);

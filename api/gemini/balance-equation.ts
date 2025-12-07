@@ -15,7 +15,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { equation } = req.body as BalanceEquationRequest;
 
       if (!equation || typeof equation !== 'string') {
-        return res.status(400).json({ error: 'Invalid equation' });
+        res.status(400).json({ error: 'Invalid equation' });
+        return;
       }
 
       const result = await balanceEquation(equation);

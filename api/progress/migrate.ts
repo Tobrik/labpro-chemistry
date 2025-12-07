@@ -16,7 +16,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { xp } = req.body;
 
       if (typeof xp !== 'number') {
-        return res.status(400).json({ error: 'Invalid XP value' });
+        res.status(400).json({ error: 'Invalid XP value' });
+        return;
       }
 
       const progressRef = db.collection('userProgress').doc(userId);
@@ -34,7 +35,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           });
         }
 
-        return res.status(200).json(existingDoc.data());
+        res.status(200).json(existingDoc.data());
+        return;
       }
 
       // Create new progress document

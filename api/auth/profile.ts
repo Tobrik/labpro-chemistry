@@ -15,10 +15,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         const userDoc = await db.collection('users').doc(userId).get();
 
         if (!userDoc.exists) {
-          return res.status(404).json({ error: 'User not found' });
+          res.status(404).json({ error: 'User not found' });
+          return;
         }
 
-        return res.status(200).json(userDoc.data());
+        res.status(200).json(userDoc.data());
+        return;
       }
 
       if (req.method === 'PUT') {
@@ -35,7 +37,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         await db.collection('users').doc(userId).update(updates);
 
         const updatedDoc = await db.collection('users').doc(userId).get();
-        return res.status(200).json(updatedDoc.data());
+        res.status(200).json(updatedDoc.data());
+        return;
       }
 
       return res.status(405).json({ error: 'Method not allowed' });

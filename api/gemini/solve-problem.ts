@@ -15,7 +15,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { problem } = req.body as SolveProblemRequest;
 
       if (!problem || typeof problem !== 'string') {
-        return res.status(400).json({ error: 'Invalid problem' });
+        res.status(400).json({ error: 'Invalid problem' });
+        return;
       }
 
       const result = await solveProblem(problem);

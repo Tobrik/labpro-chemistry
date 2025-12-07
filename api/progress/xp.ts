@@ -16,7 +16,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { xpGained, mode, correctAnswers, totalQuestions } = req.body as UpdateXPRequest;
 
       if (!xpGained || !mode || correctAnswers === undefined || totalQuestions === undefined) {
-        return res.status(400).json({ error: 'Missing required fields' });
+        res.status(400).json({ error: 'Missing required fields' });
+        return;
       }
 
       const progressRef = db.collection('userProgress').doc(userId);

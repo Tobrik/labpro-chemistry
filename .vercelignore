@@ -1,0 +1,5 @@
+# Ignore TypeScript source files in api/ folder
+# Use compiled JavaScript files instead
+api/**/*.ts
+!api/tsconfig.json
+!api/tsconfig.build.json

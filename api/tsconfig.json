@@ -8,7 +8,6 @@
     "skipLibCheck": true,
     "strict": true,
     "resolveJsonModule": true,
-    "outDir": ".vercel/output",
     "rootDir": "."
   },
   "include": ["**/*.ts"],

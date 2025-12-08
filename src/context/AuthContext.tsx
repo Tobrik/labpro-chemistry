@@ -37,7 +37,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           setToken(idToken);
 
           // Fetch user role from backend
-          const response = await fetch('/api/auth/profile', {
+          const response = await fetch('/api/profile', {
             headers: {
               'Authorization': `Bearer ${idToken}`,
             },

@@ -45,7 +45,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
 }
 
 function AppContent() {
-  const { user, loading, userRole } = useAuth();
+  const { user, loading, userRole, logout } = useAuth();
   const [activeTab, setActiveTab] = useState<NavItem>('periodic-table');
   const [showAuthModal, setShowAuthModal] = useState(false);
 
@@ -134,6 +134,17 @@ function AppContent() {
                        <p className="text-indigo-300">Администратор</p>
                      )}
                    </div>
+                 )}
+
+                 {/* Logout button */}
+                 {user && (
+                   <button
+                      onClick={() => logout()}
+                      className="px-3 py-1.5 text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                      title="Выйти"
+                   >
+                      Выйти
+                   </button>
                  )}
 
                  {/* Admin Trigger (Only for admins) */}

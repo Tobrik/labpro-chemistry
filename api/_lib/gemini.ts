@@ -9,7 +9,7 @@ if (!apiKey) {
 const genAI = new GoogleGenerativeAI(apiKey);
 
 export async function balanceEquation(equation: string) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
   const prompt = `Balance this chemical equation: ${equation}
 
@@ -31,7 +31,7 @@ Return ONLY a JSON object with this exact structure:
 }
 
 export async function getElementDetails(elementName: string) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
   const prompt = `Provide detailed information about the chemical element: ${elementName}
 
@@ -60,7 +60,7 @@ Return ONLY a JSON object with this exact structure:
 
 export async function compareSubstances(substanceA: string, substanceB: string) {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash-latest',
+    model: 'gemini-1.5-flash',
   });
 
   const prompt = `Compare these two chemical substances: ${substanceA} and ${substanceB}
@@ -81,7 +81,7 @@ Format the response in clear, readable text.`;
 }
 
 export async function solveProblem(problem: string) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash-latest' });
+  const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
   const prompt = `Solve this chemistry problem step by step: ${problem}
 

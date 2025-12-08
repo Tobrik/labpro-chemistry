@@ -1,7 +1,7 @@
 import { BalancerResult, ComparisonResult, DetailedElementData, SolverResult } from "../types";
 import { auth } from "../src/config/firebase";
 
-const API_BASE = '/api/gemini';
+const API_BASE = '/api';
 
 /**
  * Helper to get auth token and make authenticated requests

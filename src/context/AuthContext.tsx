@@ -80,18 +80,21 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
         // Create user document in Firestore via backend
         const idToken = await userCredential.user.getIdToken();
-        await fetch('/api/auth/register', {
+        const response = await fetch('/api/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${idToken}`,
           },
           body: JSON.stringify({
-            uid: userCredential.user.uid,
             email: userCredential.user.email,
             displayName,
           }),
         });
+
+        if (!response.ok) {
+          console.error('Failed to create user document');
+        }
       }
     } catch (error: any) {
       console.error('Registration error:', error);

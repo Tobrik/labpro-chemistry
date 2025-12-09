@@ -57,10 +57,19 @@ export const balanceReaction = (equationStr: string): { balanced: string; error?
     const parts = equationStr.split(/->|=|→/).map(s => s.trim());
     if (parts.length !== 2) throw new Error("Неверный формат уравнения");
 
+    // Helper to extract coefficient and formula
+    const extractCoeffAndFormula = (str: string): { coeff: number; formula: string } => {
+      const match = str.match(/^(\d+)(.+)$/);
+      if (match) {
+        return { coeff: parseInt(match[1]), formula: match[2] };
+      }
+      return { coeff: 1, formula: str };
+    };
+
     const reactantsStr = parts[0].split('+').map(s => s.trim()).filter(s => s);
     const productsStr = parts[1].split('+').map(s => s.trim()).filter(s => s);
 
-    const allFormulae = [...reactantsStr, ...productsStr];
+    const allFormulae = [...reactantsStr, ...productsStr].map(f => extractCoeffAndFormula(f).formula);
     const allElements = new Set<string>();
 
     const reactionComponents: ChemicalComponent[] = allFormulae.map(f => {
@@ -72,16 +81,19 @@ export const balanceReaction = (equationStr: string): { balanced: string; error?
     const elementList = Array.from(allElements);
     const matrix: number[][] = [];
 
+    const reactantsFormulas = reactantsStr.map(s => extractCoeffAndFormula(s).formula);
+    const productsFormulas = productsStr.map(s => extractCoeffAndFormula(s).formula);
+
     // Build Matrix
     for (const el of elementList) {
       const row: number[] = [];
       // Reactants (positive)
-      for (let i = 0; i < reactantsStr.length; i++) {
+      for (let i = 0; i < reactantsFormulas.length; i++) {
         row.push(reactionComponents[i].elements[el] || 0);
       }
       // Products (negative)
-      for (let i = 0; i < productsStr.length; i++) {
-        row.push(-(reactionComponents[reactantsStr.length + i].elements[el] || 0));
+      for (let i = 0; i < productsFormulas.length; i++) {
+        row.push(-(reactionComponents[reactantsFormulas.length + i].elements[el] || 0));
       }
       matrix.push(row);
     }
@@ -94,11 +106,11 @@ export const balanceReaction = (equationStr: string): { balanced: string; error?
 
     // Assign coefficients
     let resIdx = 0;
-    const balancedReactants = reactantsStr.map((f, i) => {
+    const balancedReactants = reactantsFormulas.map((f, i) => {
       const coef = result[resIdx++];
       return (coef > 1 ? coef : '') + f;
     });
-    const balancedProducts = productsStr.map((f, i) => {
+    const balancedProducts = productsFormulas.map((f, i) => {
       const coef = result[resIdx++];
       return (coef > 1 ? coef : '') + f;
     });
@@ -106,8 +118,8 @@ export const balanceReaction = (equationStr: string): { balanced: string; error?
     return {
       balanced: `${balancedReactants.join(' + ')} → ${balancedProducts.join(' + ')}`,
       reaction: {
-        reactants: reactantsStr.map((f, i) => ({ ...reactionComponents[i], coefficient: result[i] })),
-        products: productsStr.map((f, i) => ({ ...reactionComponents[reactantsStr.length + i], coefficient: result[reactantsStr.length + i] }))
+        reactants: reactantsFormulas.map((f, i) => ({ ...reactionComponents[i], coefficient: result[i] })),
+        products: productsFormulas.map((f, i) => ({ ...reactionComponents[reactantsFormulas.length + i], coefficient: result[reactantsFormulas.length + i] }))
       }
     };
 

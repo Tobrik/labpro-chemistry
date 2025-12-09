@@ -3,3 +3,9 @@
 api/**/*.ts
 !api/tsconfig.json
 !api/tsconfig.build.json
+
+# Ignore old nested folders (removed to reduce function count)
+api/admin/
+api/auth/
+api/gemini/
+api/progress/

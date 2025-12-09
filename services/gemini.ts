@@ -36,7 +36,7 @@ const authenticatedFetch = async (url: string, body: any): Promise<any> => {
  */
 export const balanceEquationAI = async (equation: string): Promise<BalancerResult> => {
   try {
-    return await authenticatedFetch(`${API_BASE}/balance-equation`, { equation });
+    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'balance-equation', equation });
   } catch (error) {
     console.error("Balancing error:", error);
     throw new Error("Failed to balance equation using AI.");
@@ -48,7 +48,7 @@ export const balanceEquationAI = async (equation: string): Promise<BalancerResul
  */
 export const compareSubstancesAI = async (substanceA: string, substanceB: string): Promise<ComparisonResult> => {
   try {
-    return await authenticatedFetch(`${API_BASE}/compare-substances`, { substanceA, substanceB });
+    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'compare-substances', substanceA, substanceB });
   } catch (error) {
     console.error("Comparison error:", error);
     throw new Error("Failed to compare substances.");
@@ -60,7 +60,7 @@ export const compareSubstancesAI = async (substanceA: string, substanceB: string
  */
 export const getElementDetailsAI = async (elementName: string): Promise<DetailedElementData> => {
   try {
-    return await authenticatedFetch(`${API_BASE}/element-details`, { elementName });
+    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'element-details', elementName });
   } catch (error) {
     console.error("Element Details error:", error);
     throw new Error("Failed to fetch element details.");
@@ -72,7 +72,7 @@ export const getElementDetailsAI = async (elementName: string): Promise<Detailed
  */
 export const solveProblemAI = async (problem: string): Promise<SolverResult> => {
   try {
-    return await authenticatedFetch(`${API_BASE}/solve-problem`, { problem });
+    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'solve-problem', problem });
   } catch (error) {
     console.error("Solver error:", error);
     throw new Error("Failed to solve problem.");

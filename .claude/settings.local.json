@@ -14,7 +14,8 @@
       "Bash(tree:*)",
       "Bash(npx vercel:*)",
       "Bash(curl:*)",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(git checkout HEAD -- admin auth gemini progress)"
     ],
     "deny": [],
     "ask": []

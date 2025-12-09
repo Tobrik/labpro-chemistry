@@ -74,7 +74,7 @@ const Comparison: React.FC = () => {
             <ReactMarkdown>{result.text}</ReactMarkdown>
           </div>
 
-          {result.sources.length > 0 && (
+          {result.sources && result.sources.length > 0 && (
             <div className="mt-6 pt-4 border-t border-slate-200">
               <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
                 <LinkIcon size={12} /> Источники

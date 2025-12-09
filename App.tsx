@@ -64,15 +64,15 @@ function AppContent() {
   const navItems: { id: NavItem; label: string; icon: React.ReactNode }[] = [
     { id: 'periodic-table', label: 'Таблица', icon: <Grid size={18} /> },
     { id: 'formulas', label: 'Формулы', icon: <BookOpen size={18} /> },
-    { id: 'solver', label: 'Задачи', icon: <BrainCircuit size={18} /> },
-    { id: 'reaction-balancer', label: 'Уравнитель', icon: <Scale size={18} /> },
+    { id: 'solver', label: 'AI Задачи', icon: <BrainCircuit size={18} /> },
+    { id: 'reaction-balancer', label: 'AI Уравнитель', icon: <Scale size={18} /> },
     { id: 'trainer', label: 'Тренажёр', icon: <Dumbbell size={18} /> },
     { id: 'solutions', label: 'Растворы', icon: <FlaskConical size={18} /> },
     { id: 'thermo', label: 'Термохимия', icon: <Flame size={18} /> },
     { id: 'kinetics', label: 'Кинетика', icon: <Timer size={18} /> },
     { id: 'molecules', label: '3D Молекулы', icon: <Box size={18} /> },
     { id: 'molar-mass', label: 'Мол. масса', icon: <Beaker size={18} /> },
-    { id: 'ph', label: 'Сравнение', icon: <Droplet size={18} /> },
+    { id: 'ph', label: 'AI Сравнение', icon: <Droplet size={18} /> },
   ];
 
   const renderContent = () => {
@@ -164,7 +164,7 @@ function AppContent() {
 
       {/* Navigation Pills */}
       <div className="container mx-auto px-4 lg:px-8 -mt-8 relative z-10 mb-8">
-         <div className="flex overflow-x-auto gap-2 pb-2 no-scrollbar">
+         <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-thin scrollbar-thumb-indigo-300 scrollbar-track-transparent">
            {navItems.filter(i => i.id !== 'admin').map((item) => (
              <button
                key={item.id}

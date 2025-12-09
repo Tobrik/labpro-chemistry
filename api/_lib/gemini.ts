@@ -77,7 +77,7 @@ Format the response in clear, readable text.`;
   const result = await model.generateContent(prompt);
   const text = result.response.text();
 
-  return { text };
+  return { text, sources: [] };
 }
 
 export async function solveProblem(problem: string) {

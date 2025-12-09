@@ -63,17 +63,14 @@ const Trainer: React.FC = () => {
     }
 
     try {
-      const response = await fetch('/api/progress/xp', {
+      const response = await fetch('/api/progress', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          xpGained: amount,
-          mode,
-          correctAnswers: correct ? 1 : 0,
-          totalQuestions: 1
+          xpToAdd: amount
         })
       });
 

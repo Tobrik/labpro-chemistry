@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Dumbbell, Check, X, RefreshCw, Trophy, Medal, Scale, Atom } from 'lucide-react';
+import { Dumbbell, Check, X, RefreshCw, Trophy, Medal, Scale, Atom, Crown } from 'lucide-react';
 import { PERIODIC_ELEMENTS } from '../constants';
 import { ElementData } from '../types';
 import { balanceReaction } from '../chemistryUtils';
 import { useAuth } from '../src/context/AuthContext';
+
+type LeaderboardEntry = {
+  uid: string;
+  displayName: string;
+  xp: number;
+  level: number;
+  tasksCompleted: number;
+};
 
 const Trainer: React.FC = () => {
   const { token } = useAuth();
@@ -12,6 +20,8 @@ const Trainer: React.FC = () => {
   const [streak, setStreak] = useState(0);
   const [level, setLevel] = useState(1);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
 
   // Element Mode State
   const [currentElement, setCurrentElement] = useState<ElementData | null>(null);
@@ -50,7 +60,21 @@ const Trainer: React.FC = () => {
     };
 
     loadProgress();
+    loadLeaderboard();
   }, [token]);
+
+  // Load leaderboard
+  const loadLeaderboard = async () => {
+    try {
+      const response = await fetch('/api/leaderboard');
+      if (response.ok) {
+        const data = await response.json();
+        setLeaderboard(data);
+      }
+    } catch (error) {
+      console.error('Failed to load leaderboard:', error);
+    }
+  };
 
   const addXP = async (amount: number, mode: 'elements' | 'balancing', correct: boolean) => {
     if (!token) {
@@ -193,7 +217,56 @@ const Trainer: React.FC = () => {
              <div className="text-2xl font-bold">{score} XP</div>
              <div className="text-xs opacity-80">До след. уровня: {100 - (score % 100)} XP</div>
           </div>
+          <button
+            onClick={() => setShowLeaderboard(!showLeaderboard)}
+            className="ml-4 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors flex items-center gap-2"
+          >
+            <Trophy size={20} />
+            {showLeaderboard ? 'Скрыть' : 'Рейтинг'}
+          </button>
       </div>
+
+      {/* Leaderboard */}
+      {showLeaderboard && (
+        <div className="bg-white rounded-2xl p-6 shadow-lg mb-6 border border-slate-200">
+          <div className="flex items-center gap-2 mb-4">
+            <Crown className="text-yellow-500" size={24} />
+            <h3 className="text-xl font-bold text-slate-800">Топ 10 игроков</h3>
+          </div>
+          <div className="space-y-2">
+            {leaderboard.map((entry, index) => (
+              <div
+                key={entry.uid}
+                className={`flex items-center justify-between p-3 rounded-lg ${
+                  index === 0 ? 'bg-gradient-to-r from-yellow-50 to-yellow-100 border-2 border-yellow-300' :
+                  index === 1 ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-300' :
+                  index === 2 ? 'bg-gradient-to-r from-orange-50 to-orange-100 border-2 border-orange-300' :
+                  'bg-slate-50'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                    index === 0 ? 'bg-yellow-500 text-white' :
+                    index === 1 ? 'bg-gray-400 text-white' :
+                    index === 2 ? 'bg-orange-500 text-white' :
+                    'bg-slate-300 text-slate-700'
+                  }`}>
+                    {index + 1}
+                  </div>
+                  <div>
+                    <div className="font-bold text-slate-800">{entry.displayName}</div>
+                    <div className="text-xs text-slate-500">Уровень {entry.level}</div>
+                  </div>
+                </div>
+                <div className="text-right">
+                  <div className="font-bold text-indigo-600">{entry.xp} XP</div>
+                  <div className="text-xs text-slate-500">{entry.tasksCompleted} задач</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* Mode Switcher */}
       <div className="flex gap-4 mb-6">

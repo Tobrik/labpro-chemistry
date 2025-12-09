@@ -19,6 +19,7 @@ const Trainer: React.FC = () => {
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [level, setLevel] = useState(1);
+  const [correctAnswers, setCorrectAnswers] = useState(0);
   const [feedback, setFeedback] = useState<'correct' | 'wrong' | null>(null);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
@@ -46,6 +47,7 @@ const Trainer: React.FC = () => {
           setScore(data.xp || 0);
           setLevel(data.level || 1);
           setStreak(data.streak || 0);
+          setCorrectAnswers(data.correctAnswers || 0);
         }
       } catch (error) {
         console.error('Failed to load progress:', error);
@@ -94,19 +96,17 @@ const Trainer: React.FC = () => {
           'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-          xpToAdd: amount
+          xpToAdd: amount,
+          correct: correct
         })
       });
 
       if (response.ok) {
         const data = await response.json();
-        setScore(data.newXp);
-        setLevel(data.newLevel);
-
-        if (data.leveledUp) {
-          // Show level up animation or notification
-          console.log('Level up!', data.newLevel);
-        }
+        setScore(data.xp);
+        setLevel(data.level);
+        setStreak(data.streak || 0);
+        setCorrectAnswers(data.correctAnswers || 0);
       }
     } catch (error) {
       console.error('Failed to update XP:', error);
@@ -212,10 +212,17 @@ const Trainer: React.FC = () => {
                   Уровень {level}
                   <Medal className="text-yellow-300" />
               </div>
+              {streak > 0 && (
+                <div className="mt-2 flex items-center gap-2 text-sm">
+                  <span className="bg-orange-500 px-2 py-1 rounded-lg font-bold animate-pulse">
+                    🔥 {streak} подряд!
+                  </span>
+                </div>
+              )}
           </div>
           <div className="text-right">
              <div className="text-2xl font-bold">{score} XP</div>
-             <div className="text-xs opacity-80">До след. уровня: {100 - (score % 100)} XP</div>
+             <div className="text-xs opacity-80">До уровня {level + 1}: {3 - (correctAnswers % 3)} прав. отв.</div>
           </div>
           <button
             onClick={() => setShowLeaderboard(!showLeaderboard)}

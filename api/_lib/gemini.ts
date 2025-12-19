@@ -98,3 +98,32 @@ Format the response in clear, readable text with proper formatting.`;
 
   return { solution };
 }
+
+export async function translateElement(elementName: string, targetLang: 'ru' | 'en' | 'kk') {
+  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+
+  const langMap = { ru: 'Russian', en: 'English', kk: 'Kazakh' };
+  const prompt = `Provide detailed information about the chemical element "${elementName}" in ${langMap[targetLang]}.
+
+Return ONLY a JSON object with this exact structure:
+{
+  "electronConfiguration": "electron configuration",
+  "electronShells": "electron shell distribution",
+  "oxidationStates": "common oxidation states",
+  "meltingPoint": "melting point with units",
+  "boilingPoint": "boiling point with units",
+  "density": "density with units",
+  "discoveryYear": "year of discovery",
+  "description": "brief description"
+}`;
+
+  const result = await model.generateContent(prompt);
+  const text = result.response.text();
+
+  const jsonMatch = text.match(/\{[\s\S]*\}/);
+  if (!jsonMatch) {
+    throw new Error('Failed to parse response');
+  }
+
+  return JSON.parse(jsonMatch[0]);
+}

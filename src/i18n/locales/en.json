@@ -1,0 +1,148 @@
+{
+  "app": {
+    "title": "LabPro",
+    "subtitle": "Tools for chemical calculations",
+    "logout": "Logout"
+  },
+  "nav": {
+    "periodicTable": "Table",
+    "formulas": "Formulas",
+    "trainer": "Trainer",
+    "molarMass": "Molar Mass",
+    "aiBalancer": "AI Balancer",
+    "aiSolver": "AI Solver",
+    "solutions": "Solutions",
+    "thermochemistry": "Thermochemistry",
+    "kinetics": "Kinetics",
+    "molecules": "3D Molecules",
+    "aiCompare": "AI Compare"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "calculate": "Calculate",
+    "clear": "Clear",
+    "next": "Next"
+  },
+  "errors": {
+    "authRequired": "Authentication required",
+    "generic": "Something went wrong",
+    "networkError": "Network error"
+  },
+  "kinetics": {
+    "title": "Chemical Kinetics",
+    "subtitle": "Reaction rates and orders",
+    "order": "Reaction order",
+    "initialConcentration": "Initial concentration [A]₀ (mol/L)",
+    "rateConstant": "Rate constant k",
+    "concentrationGraph": "Concentration vs Time",
+    "rateGraph": "Reaction rate v(t)",
+    "equations": "Equations",
+    "concentrationEquation": "Concentration:",
+    "rateEquation": "Rate:"
+  },
+  "molecules": {
+    "title": "3D Molecules",
+    "subtitle": "Interactive visualization",
+    "hint": "Rotate, zoom and move the molecule with your mouse"
+  },
+  "aiCompare": {
+    "title": "AI Substance Comparison",
+    "subtitle": "Compare two substances using AI",
+    "substanceA": "Substance A",
+    "substanceB": "Substance B",
+    "compare": "Compare",
+    "result": "Result"
+  },
+  "aiBalancer": {
+    "title": "AI Equation Balancer",
+    "subtitle": "Balance equations using AI",
+    "equation": "Chemical equation",
+    "placeholder": "e.g.: Fe + O2 = Fe2O3",
+    "balance": "Balance",
+    "result": "Equation balanced",
+    "explanation": "Explanation"
+  },
+  "trainer": {
+    "title": "Chemistry Trainer",
+    "subtitle": "Test your knowledge",
+    "elements": "Elements",
+    "balancing": "Equations",
+    "level": "Level",
+    "streak": "Streak",
+    "question": "Question",
+    "whatElement": "What element is this?",
+    "correct": "Correct!",
+    "incorrect": "Incorrect",
+    "next": "Next question"
+  },
+  "periodicTable": {
+    "title": "Periodic Table",
+    "subtitle": "Interactive periodic table",
+    "search": "Search element",
+    "filters": "Filters",
+    "category": "Category",
+    "allCategories": "All categories",
+    "electronConfiguration": "Electron configuration",
+    "electronShells": "Electron shells",
+    "oxidationStates": "Oxidation states",
+    "meltingPoint": "Melting point",
+    "boilingPoint": "Boiling point",
+    "density": "Density",
+    "discoveryYear": "Discovery year",
+    "description": "Description"
+  },
+  "molarMass": {
+    "title": "Molar Mass",
+    "subtitle": "Calculate molar mass",
+    "formula": "Chemical formula",
+    "placeholder": "e.g.: H2O, NaCl, Ca(OH)2",
+    "result": "Calculation result"
+  },
+  "solutions": {
+    "title": "Solutions and Dilutions",
+    "subtitle": "Calculate solution concentrations",
+    "concentration": "Concentration",
+    "volume": "Volume",
+    "mass": "Mass"
+  },
+  "thermochemistry": {
+    "title": "Thermochemistry",
+    "subtitle": "Thermal effects of reactions",
+    "enthalpy": "Enthalpy",
+    "entropy": "Entropy",
+    "gibbsEnergy": "Gibbs energy"
+  },
+  "formulas": {
+    "title": "Formula Reference",
+    "subtitle": "Chemical formulas and laws",
+    "search": "Search formula"
+  },
+  "aiSolver": {
+    "title": "AI Problem Solver",
+    "subtitle": "Solve chemistry problems with AI",
+    "problem": "Problem statement",
+    "solve": "Solve",
+    "solution": "Solution"
+  },
+  "auth": {
+    "login": "Login",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "displayName": "Display name",
+    "loginButton": "Sign in",
+    "registerButton": "Sign up",
+    "switchToRegister": "Don't have an account? Register",
+    "switchToLogin": "Already have an account? Sign in"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "users": "Users",
+    "analytics": "Analytics",
+    "settings": "Settings"
+  }
+}

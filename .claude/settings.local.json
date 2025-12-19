@@ -1,23 +1,14 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find:*)",
-      "Bash(dir:*)",
-      "Bash(npm run build:*)",
-      "Bash(npx tsc:*)",
+      "Bash(git clone:*)",
+      "Bash(npm install)",
+      "Bash(npx playwright install:*)",
+      "Bash(wc:*)",
       "Bash(npm install:*)",
-      "Bash(npm uninstall:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(cat:*)",
-      "Bash(tree:*)",
-      "Bash(npx vercel:*)",
-      "Bash(curl:*)",
-      "Bash(ls:*)",
-      "Bash(git checkout HEAD -- admin auth gemini progress)"
-    ],
-    "deny": [],
-    "ask": []
+      "Bash(npm run dev:*)",
+      "Bash(npx tsc:*)",
+      "Bash(curl -s http://localhost:3000)"
+    ]
   }
 }

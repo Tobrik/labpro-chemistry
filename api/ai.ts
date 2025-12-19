@@ -4,7 +4,8 @@ import {
   balanceEquation,
   getElementDetails,
   compareSubstances,
-  solveProblem
+  solveProblem,
+  translateElement
 } from './_lib/gemini';
 import { AuthenticatedRequest } from './_lib/types';
 
@@ -51,6 +52,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             return;
           }
           result = await solveProblem(params.problem);
+          break;
+
+        case 'translate-element':
+          if (!params.element || !params.targetLang) {
+            res.status(400).json({ error: 'Invalid parameters' });
+            return;
+          }
+          result = await translateElement(params.element, params.targetLang);
           break;
 
         default:

@@ -1,0 +1,148 @@
+{
+  "app": {
+    "title": "LabPro",
+    "subtitle": "Химиялық есептеулер құралдары",
+    "logout": "Шығу"
+  },
+  "nav": {
+    "periodicTable": "Кесте",
+    "formulas": "Формулалар",
+    "trainer": "Жаттықтырғыш",
+    "molarMass": "Мол. масса",
+    "aiBalancer": "AI Теңестіргіш",
+    "aiSolver": "AI Есептер",
+    "solutions": "Ерітінділер",
+    "thermochemistry": "Термохимия",
+    "kinetics": "Кинетика",
+    "molecules": "3D Молекулалар",
+    "aiCompare": "AI Салыстыру"
+  },
+  "common": {
+    "loading": "Жүктелуде...",
+    "error": "Қате",
+    "success": "Сәтті",
+    "cancel": "Болдырмау",
+    "save": "Сақтау",
+    "calculate": "Есептеу",
+    "clear": "Тазалау",
+    "next": "Келесі"
+  },
+  "errors": {
+    "authRequired": "Авторизация қажет",
+    "generic": "Бірдеңе дұрыс болмады",
+    "networkError": "Желі қатесі"
+  },
+  "kinetics": {
+    "title": "Химиялық кинетика",
+    "subtitle": "Реакция жылдамдығы және ретті",
+    "order": "Реакция реті",
+    "initialConcentration": "Бастапқы концентрация [A]₀ (моль/л)",
+    "rateConstant": "Жылдамдық тұрақтысы k",
+    "concentrationGraph": "Уақытқа байланысты [A] графигі",
+    "rateGraph": "Жылдамдық v(t) графигі",
+    "equations": "Теңдеулер",
+    "concentrationEquation": "Концентрация:",
+    "rateEquation": "Жылдамдық:"
+  },
+  "molecules": {
+    "title": "3D Молекулалар",
+    "subtitle": "Интерактивті визуализация",
+    "hint": "Молекуланы тышқанмен айналдырыңыз, масштабтаңыз және жылжытыңыз"
+  },
+  "aiCompare": {
+    "title": "AI Заттарды салыстыру",
+    "subtitle": "AI көмегімен екі затты салыстырыңыз",
+    "substanceA": "Зат A",
+    "substanceB": "Зат B",
+    "compare": "Салыстыру",
+    "result": "Нәтиже"
+  },
+  "aiBalancer": {
+    "title": "AI Реакция теңестіргіші",
+    "subtitle": "AI көмегімен коэффициенттерді орналастыру",
+    "equation": "Химиялық теңдеу",
+    "placeholder": "мысалы: Fe + O2 = Fe2O3",
+    "balance": "Теңестіру",
+    "result": "Теңдеу теңестірілді",
+    "explanation": "Түсініктеме"
+  },
+  "trainer": {
+    "title": "Химиялық жаттықтырғыш",
+    "subtitle": "Білімді тексер",
+    "elements": "Элементтер",
+    "balancing": "Теңдеулер",
+    "level": "Деңгей",
+    "streak": "Серия",
+    "question": "Сұрақ",
+    "whatElement": "Бұл қандай элемент?",
+    "correct": "Дұрыс!",
+    "incorrect": "Қате",
+    "next": "Келесі сұрақ"
+  },
+  "periodicTable": {
+    "title": "Периодтық кесте",
+    "subtitle": "Интерактивті Менделеев кестесі",
+    "search": "Элементті іздеу",
+    "filters": "Сүзгілер",
+    "category": "Санат",
+    "allCategories": "Барлық санаттар",
+    "electronConfiguration": "Электрондық конфигурация",
+    "electronShells": "Электрондық қабықтар",
+    "oxidationStates": "Тотығу дәрежелері",
+    "meltingPoint": "Балқу температурасы",
+    "boilingPoint": "Қайнау температурасы",
+    "density": "Тығыздық",
+    "discoveryYear": "Ашылған жыл",
+    "description": "Сипаттама"
+  },
+  "molarMass": {
+    "title": "Молярлық масса",
+    "subtitle": "Заттың молярлық массасын есептеу",
+    "formula": "Химиялық формула",
+    "placeholder": "мысалы: H2O, NaCl, Ca(OH)2",
+    "result": "Есептеу нәтижесі"
+  },
+  "solutions": {
+    "title": "Ерітінділер және сұйылту",
+    "subtitle": "Ерітінді концентрацияларын есептеу",
+    "concentration": "Концентрация",
+    "volume": "Көлем",
+    "mass": "Масса"
+  },
+  "thermochemistry": {
+    "title": "Термохимия",
+    "subtitle": "Реакциялардың жылулық әсерлері",
+    "enthalpy": "Энтальпия",
+    "entropy": "Энтропия",
+    "gibbsEnergy": "Гиббс энергиясы"
+  },
+  "formulas": {
+    "title": "Формулалар анықтамалығы",
+    "subtitle": "Химиялық формулалар және заңдар",
+    "search": "Формуланы іздеу"
+  },
+  "aiSolver": {
+    "title": "AI Есептерді шешу",
+    "subtitle": "AI көмегімен химиялық есептерді шешіңіз",
+    "problem": "Есеп шарты",
+    "solve": "Шешу",
+    "solution": "Шешім"
+  },
+  "auth": {
+    "login": "Кіру",
+    "register": "Тіркелу",
+    "email": "Email",
+    "password": "Құпия сөз",
+    "displayName": "Пайдаланушы аты",
+    "loginButton": "Кіру",
+    "registerButton": "Тіркелу",
+    "switchToRegister": "Аккаунт жоқ па? Тіркеліңіз",
+    "switchToLogin": "Аккаунт бар ма? Кіріңіз"
+  },
+  "admin": {
+    "title": "Әкімші панелі",
+    "users": "Пайдаланушылар",
+    "analytics": "Аналитика",
+    "settings": "Баптаулар"
+  }
+}

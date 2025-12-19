@@ -214,3 +214,19 @@ export const calculateConcentration = (order: number, c0: number, k: number, t: 
     if (order === 2) return c0 / (1 + k * t * c0);
     return 0;
 };
+
+/**
+ * Calculate reaction rate v(t) = -d[A]/dt
+ */
+export const calculateReactionRate = (order: number, c0: number, k: number, t: number): number => {
+    if (order === 0) return k; // v = k (constant)
+    if (order === 1) {
+        const c = c0 * Math.exp(-k * t);
+        return k * c; // v = k·[A]
+    }
+    if (order === 2) {
+        const c = c0 / (1 + k * t * c0);
+        return k * c * c; // v = k·[A]²
+    }
+    return 0;
+};

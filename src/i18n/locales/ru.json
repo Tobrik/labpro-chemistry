@@ -1,0 +1,148 @@
+{
+  "app": {
+    "title": "LabPro",
+    "subtitle": "Инструменты для химических расчётов",
+    "logout": "Выйти"
+  },
+  "nav": {
+    "periodicTable": "Таблица",
+    "formulas": "Формулы",
+    "trainer": "Тренажёр",
+    "molarMass": "Мол. масса",
+    "aiBalancer": "AI Уравнитель",
+    "aiSolver": "AI Задачи",
+    "solutions": "Растворы",
+    "thermochemistry": "Термохимия",
+    "kinetics": "Кинетика",
+    "molecules": "3D Молекулы",
+    "aiCompare": "AI Сравнение"
+  },
+  "common": {
+    "loading": "Загрузка...",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "calculate": "Рассчитать",
+    "clear": "Очистить",
+    "next": "Далее"
+  },
+  "errors": {
+    "authRequired": "Требуется авторизация",
+    "generic": "Что-то пошло не так",
+    "networkError": "Ошибка сети"
+  },
+  "kinetics": {
+    "title": "Химическая кинетика",
+    "subtitle": "Скорость реакции и порядки",
+    "order": "Порядок реакции",
+    "initialConcentration": "Начальная концентрация [A]₀ (моль/л)",
+    "rateConstant": "Константа скорости k",
+    "concentrationGraph": "График [A] от времени",
+    "rateGraph": "График скорости v(t)",
+    "equations": "Уравнения",
+    "concentrationEquation": "Концентрация:",
+    "rateEquation": "Скорость:"
+  },
+  "molecules": {
+    "title": "3D Молекулы",
+    "subtitle": "Интерактивная визуализация",
+    "hint": "Вращайте, масштабируйте и перемещайте молекулу мышью"
+  },
+  "aiCompare": {
+    "title": "AI Сравнение веществ",
+    "subtitle": "Сравните два вещества с помощью AI",
+    "substanceA": "Вещество A",
+    "substanceB": "Вещество B",
+    "compare": "Сравнить",
+    "result": "Результат"
+  },
+  "aiBalancer": {
+    "title": "AI Уравнитель реакций",
+    "subtitle": "Расстановка коэффициентов с помощью AI",
+    "equation": "Химическое уравнение",
+    "placeholder": "например: Fe + O2 = Fe2O3",
+    "balance": "Уравнять",
+    "result": "Уравнение уравнено",
+    "explanation": "Пояснение"
+  },
+  "trainer": {
+    "title": "Химический тренажёр",
+    "subtitle": "Проверь свои знания",
+    "elements": "Элементы",
+    "balancing": "Уравнения",
+    "level": "Уровень",
+    "streak": "Серия",
+    "question": "Вопрос",
+    "whatElement": "Какой это элемент?",
+    "correct": "Правильно!",
+    "incorrect": "Неправильно",
+    "next": "Следующий вопрос"
+  },
+  "periodicTable": {
+    "title": "Периодическая таблица",
+    "subtitle": "Интерактивная таблица Менделеева",
+    "search": "Поиск элемента",
+    "filters": "Фильтры",
+    "category": "Категория",
+    "allCategories": "Все категории",
+    "electronConfiguration": "Электронная конфигурация",
+    "electronShells": "Электронные оболочки",
+    "oxidationStates": "Степени окисления",
+    "meltingPoint": "Температура плавления",
+    "boilingPoint": "Температура кипения",
+    "density": "Плотность",
+    "discoveryYear": "Год открытия",
+    "description": "Описание"
+  },
+  "molarMass": {
+    "title": "Молярная масса",
+    "subtitle": "Расчёт молярной массы вещества",
+    "formula": "Химическая формула",
+    "placeholder": "например: H2O, NaCl, Ca(OH)2",
+    "result": "Результат расчёта"
+  },
+  "solutions": {
+    "title": "Растворы и разбавления",
+    "subtitle": "Расчёты концентраций растворов",
+    "concentration": "Концентрация",
+    "volume": "Объём",
+    "mass": "Масса"
+  },
+  "thermochemistry": {
+    "title": "Термохимия",
+    "subtitle": "Тепловые эффекты реакций",
+    "enthalpy": "Энтальпия",
+    "entropy": "Энтропия",
+    "gibbsEnergy": "Энергия Гиббса"
+  },
+  "formulas": {
+    "title": "Справочник формул",
+    "subtitle": "Химические формулы и законы",
+    "search": "Поиск формулы"
+  },
+  "aiSolver": {
+    "title": "AI Решение задач",
+    "subtitle": "Решайте химические задачи с помощью AI",
+    "problem": "Условие задачи",
+    "solve": "Решить",
+    "solution": "Решение"
+  },
+  "auth": {
+    "login": "Вход",
+    "register": "Регистрация",
+    "email": "Email",
+    "password": "Пароль",
+    "displayName": "Имя пользователя",
+    "loginButton": "Войти",
+    "registerButton": "Зарегистрироваться",
+    "switchToRegister": "Нет аккаунта? Зарегистрируйтесь",
+    "switchToLogin": "Уже есть аккаунт? Войдите"
+  },
+  "admin": {
+    "title": "Панель администратора",
+    "users": "Пользователи",
+    "analytics": "Аналитика",
+    "settings": "Настройки"
+  }
+}

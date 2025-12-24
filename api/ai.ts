@@ -36,7 +36,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             res.status(400).json({ error: 'Invalid equation' });
             return;
           }
-          result = await balanceEquation(params.equation);
+          const balanceLanguage = params.language || 'ru';
+          result = await balanceEquation(params.equation, balanceLanguage);
           break;
 
         case 'compare-substances':
@@ -44,7 +45,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             res.status(400).json({ error: 'Invalid substances' });
             return;
           }
-          result = await compareSubstances(params.substanceA, params.substanceB);
+          const compareLanguage = params.language || 'ru';
+          result = await compareSubstances(params.substanceA, params.substanceB, compareLanguage);
           break;
 
         case 'solve-problem':

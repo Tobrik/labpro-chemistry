@@ -8,15 +8,23 @@ if (!apiKey) {
 
 const genAI = new GoogleGenerativeAI(apiKey);
 
-export async function balanceEquation(equation: string) {
+export async function balanceEquation(equation: string, language: 'ru' | 'en' | 'kk' = 'ru') {
   const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
+  const langMap = {
+    ru: 'Russian',
+    en: 'English',
+    kk: 'Kazakh'
+  };
+
   const prompt = `Balance this chemical equation: ${equation}
+
+IMPORTANT: Respond in ${langMap[language]} language.
 
 Return ONLY a JSON object with this exact structure:
 {
   "balancedEquation": "the balanced equation",
-  "explanation": "brief explanation of how it was balanced"
+  "explanation": "brief explanation of how it was balanced IN ${langMap[language]}"
 }`;
 
   const result = await model.generateContent(prompt);
@@ -58,12 +66,20 @@ Return ONLY a JSON object with this exact structure:
   return JSON.parse(jsonMatch[0]);
 }
 
-export async function compareSubstances(substanceA: string, substanceB: string) {
+export async function compareSubstances(substanceA: string, substanceB: string, language: 'ru' | 'en' | 'kk' = 'ru') {
   const model = genAI.getGenerativeModel({
     model: 'gemini-2.5-flash',
   });
 
+  const langMap = {
+    ru: 'Russian',
+    en: 'English',
+    kk: 'Kazakh'
+  };
+
   const prompt = `Compare these two chemical substances: ${substanceA} and ${substanceB}
+
+IMPORTANT: Respond ENTIRELY in ${langMap[language]} language.
 
 Provide a detailed comparison including:
 - Chemical formulas
@@ -72,7 +88,7 @@ Provide a detailed comparison including:
 - Common uses
 - Key differences
 
-Format the response in clear, readable text.`;
+Format the response in clear, readable text IN ${langMap[language]}.`;
 
   const result = await model.generateContent(prompt);
   const text = result.response.text();

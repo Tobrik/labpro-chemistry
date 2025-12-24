@@ -27,7 +27,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             res.status(400).json({ error: 'Invalid element name' });
             return;
           }
-          result = await getElementDetails(params.elementName);
+          const language = params.language || 'ru';
+          result = await translateElement(params.elementName, language);
           break;
 
         case 'balance-equation':

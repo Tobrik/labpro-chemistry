@@ -58,9 +58,9 @@ export const compareSubstancesAI = async (substanceA: string, substanceB: string
 /**
  * Fetches detailed information about a chemical element using the backend API
  */
-export const getElementDetailsAI = async (elementName: string): Promise<DetailedElementData> => {
+export const getElementDetailsAI = async (elementName: string, language: 'ru' | 'en' | 'kk' = 'ru'): Promise<DetailedElementData> => {
   try {
-    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'element-details', elementName });
+    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'element-details', elementName, language });
   } catch (error) {
     console.error("Element Details error:", error);
     throw new Error("Failed to fetch element details.");

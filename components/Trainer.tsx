@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dumbbell, Check, X, RefreshCw, Trophy, Medal, Scale, Atom, Crown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { PERIODIC_ELEMENTS } from '../constants';
 import { ElementData } from '../types';
 import { balanceReaction } from '../chemistryUtils';
@@ -14,6 +15,7 @@ type LeaderboardEntry = {
 };
 
 const Trainer: React.FC = () => {
+  const { t } = useTranslation();
   const { token } = useAuth();
   const [mode, setMode] = useState<'elements' | 'balancing'>('elements');
   const [score, setScore] = useState(0);
@@ -195,60 +197,60 @@ const Trainer: React.FC = () => {
   return (
     <div className="space-y-6">
       <div className="flex items-center space-x-3 mb-6">
-        <div className="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-indigo-600">
+        <div className="w-12 h-12 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center text-indigo-600 dark:text-indigo-400 transition-colors">
           <Dumbbell size={28} />
         </div>
         <div>
-          <h2 className="text-2xl font-bold text-slate-800">Тренажёр</h2>
-          <p className="text-slate-500">Проверь свои знания и получай уровни</p>
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-zinc-100 transition-colors">{t('trainer.title')}</h2>
+          <p className="text-slate-500 dark:text-zinc-400 transition-colors">{t('trainer.subtitle')}</p>
         </div>
       </div>
 
       {/* Gamification Bar */}
-      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-6 text-white shadow-lg mb-6 flex justify-between items-center">
+      <div className="bg-gradient-to-r from-indigo-600 to-purple-600 dark:from-indigo-700 dark:to-purple-700 rounded-2xl p-6 text-white shadow-lg mb-6 flex justify-between items-center transition-colors">
           <div>
-              <div className="text-xs font-bold uppercase opacity-70 mb-1">Твой прогресс</div>
+              <div className="text-xs font-bold uppercase opacity-70 mb-1">{t('trainer.yourProgress')}</div>
               <div className="text-3xl font-bold flex items-center gap-2">
-                  Уровень {level}
+                  {t('trainer.level')} {level}
                   <Medal className="text-yellow-300" />
               </div>
               {streak > 0 && (
                 <div className="mt-2 flex items-center gap-2 text-sm">
                   <span className="bg-orange-500 px-2 py-1 rounded-lg font-bold animate-pulse">
-                    🔥 {streak} подряд!
+                    🔥 {streak} {t('trainer.streakText')}
                   </span>
                 </div>
               )}
           </div>
           <div className="text-right">
              <div className="text-2xl font-bold">{score} XP</div>
-             <div className="text-xs opacity-80">До уровня {level + 1}: {3 - (correctAnswers % 3)} прав. отв.</div>
+             <div className="text-xs opacity-80">{t('trainer.nextLevel')} {level + 1}: {3 - (correctAnswers % 3)} {t('trainer.correctAnswers')}</div>
           </div>
           <button
             onClick={() => setShowLeaderboard(!showLeaderboard)}
             className="ml-4 px-4 py-2 bg-white/20 hover:bg-white/30 rounded-lg transition-colors flex items-center gap-2"
           >
             <Trophy size={20} />
-            {showLeaderboard ? 'Скрыть' : 'Рейтинг'}
+            {showLeaderboard ? t('trainer.hide') : t('trainer.leaderboard')}
           </button>
       </div>
 
       {/* Leaderboard */}
       {showLeaderboard && (
-        <div className="bg-white rounded-2xl p-6 shadow-lg mb-6 border border-slate-200">
+        <div className="bg-white dark:bg-zinc-800 rounded-2xl p-6 shadow-lg mb-6 border border-slate-200 dark:border-zinc-600 transition-colors">
           <div className="flex items-center gap-2 mb-4">
-            <Crown className="text-yellow-500" size={24} />
-            <h3 className="text-xl font-bold text-slate-800">Топ 10 игроков</h3>
+            <Crown className="text-yellow-500 dark:text-yellow-400" size={24} />
+            <h3 className="text-xl font-bold text-slate-800 dark:text-zinc-100 transition-colors">{t('trainer.topPlayers')}</h3>
           </div>
           <div className="space-y-2">
             {leaderboard.map((entry, index) => (
               <div
                 key={entry.uid}
-                className={`flex items-center justify-between p-3 rounded-lg ${
-                  index === 0 ? 'bg-gradient-to-r from-yellow-50 to-yellow-100 border-2 border-yellow-300' :
-                  index === 1 ? 'bg-gradient-to-r from-gray-50 to-gray-100 border-2 border-gray-300' :
-                  index === 2 ? 'bg-gradient-to-r from-orange-50 to-orange-100 border-2 border-orange-300' :
-                  'bg-slate-50'
+                className={`flex items-center justify-between p-3 rounded-lg transition-colors ${
+                  index === 0 ? 'bg-gradient-to-r from-yellow-50 to-yellow-100 dark:from-yellow-900/20 dark:to-yellow-800/20 border-2 border-yellow-300 dark:border-yellow-600' :
+                  index === 1 ? 'bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800/20 dark:to-gray-700/20 border-2 border-gray-300 dark:border-gray-600' :
+                  index === 2 ? 'bg-gradient-to-r from-orange-50 to-orange-100 dark:from-orange-900/20 dark:to-orange-800/20 border-2 border-orange-300 dark:border-orange-600' :
+                  'bg-slate-50 dark:bg-zinc-900'
                 }`}
               >
                 <div className="flex items-center gap-3">
@@ -256,18 +258,18 @@ const Trainer: React.FC = () => {
                     index === 0 ? 'bg-yellow-500 text-white' :
                     index === 1 ? 'bg-gray-400 text-white' :
                     index === 2 ? 'bg-orange-500 text-white' :
-                    'bg-slate-300 text-slate-700'
+                    'bg-slate-300 dark:bg-zinc-600 text-slate-700 dark:text-zinc-200'
                   }`}>
                     {index + 1}
                   </div>
                   <div>
-                    <div className="font-bold text-slate-800">{entry.displayName}</div>
-                    <div className="text-xs text-slate-500">Уровень {entry.level}</div>
+                    <div className="font-bold text-slate-800 dark:text-zinc-100 transition-colors">{entry.displayName}</div>
+                    <div className="text-xs text-slate-500 dark:text-zinc-400 transition-colors">{t('trainer.level')} {entry.level}</div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="font-bold text-indigo-600">{entry.xp} XP</div>
-                  <div className="text-xs text-slate-500">{entry.tasksCompleted} задач</div>
+                  <div className="font-bold text-indigo-600 dark:text-indigo-400 transition-colors">{entry.xp} XP</div>
+                  <div className="text-xs text-slate-500 dark:text-zinc-400 transition-colors">{entry.tasksCompleted} {t('trainer.tasksCompleted')}</div>
                 </div>
               </div>
             ))}
@@ -277,25 +279,25 @@ const Trainer: React.FC = () => {
 
       {/* Mode Switcher */}
       <div className="flex gap-4 mb-6">
-          <button onClick={() => setMode('elements')} className={`flex-1 py-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold transition-all ${mode === 'elements' ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-slate-200 bg-white text-slate-400 hover:border-indigo-200'}`}>
+          <button onClick={() => setMode('elements')} className={`flex-1 py-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold transition-all ${mode === 'elements' ? 'border-indigo-500 dark:border-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300' : 'border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-slate-400 dark:text-zinc-500 hover:border-indigo-200 dark:hover:border-indigo-700'}`}>
               <Atom size={24} />
-              Элементы
+              {t('trainer.elements')}
           </button>
-          <button onClick={() => setMode('balancing')} className={`flex-1 py-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold transition-all ${mode === 'balancing' ? 'border-indigo-500 bg-indigo-50 text-indigo-700' : 'border-slate-200 bg-white text-slate-400 hover:border-indigo-200'}`}>
+          <button onClick={() => setMode('balancing')} className={`flex-1 py-4 rounded-xl border-2 flex flex-col items-center gap-2 font-bold transition-all ${mode === 'balancing' ? 'border-indigo-500 dark:border-indigo-400 bg-indigo-50 dark:bg-indigo-900/20 text-indigo-700 dark:text-indigo-300' : 'border-slate-200 dark:border-zinc-600 bg-white dark:bg-zinc-800 text-slate-400 dark:text-zinc-500 hover:border-indigo-200 dark:hover:border-indigo-700'}`}>
               <Scale size={24} />
-              Уравнивание
+              {t('trainer.balancing')}
           </button>
       </div>
 
-      <div className="bg-slate-50 rounded-2xl p-6 border border-slate-100 text-center relative overflow-hidden min-h-[300px] flex flex-col justify-center">
+      <div className="bg-slate-50 dark:bg-zinc-900 rounded-2xl p-6 border border-slate-100 dark:border-zinc-700 text-center relative overflow-hidden min-h-[300px] flex flex-col justify-center transition-colors">
         {feedback === 'correct' && (
-          <div className="absolute inset-0 bg-green-500/10 flex items-center justify-center z-20 animate-fade-in backdrop-blur-[2px]">
-             <Check size={80} className="text-green-500 drop-shadow-md" />
+          <div className="absolute inset-0 bg-green-500/10 dark:bg-green-500/20 flex items-center justify-center z-20 animate-fade-in backdrop-blur-[2px]">
+             <Check size={80} className="text-green-500 dark:text-green-400 drop-shadow-md" />
           </div>
         )}
         {feedback === 'wrong' && (
-          <div className="absolute inset-0 bg-red-500/10 flex items-center justify-center z-20 animate-fade-in backdrop-blur-[2px]">
-             <X size={80} className="text-red-500 drop-shadow-md" />
+          <div className="absolute inset-0 bg-red-500/10 dark:bg-red-500/20 flex items-center justify-center z-20 animate-fade-in backdrop-blur-[2px]">
+             <X size={80} className="text-red-500 dark:text-red-400 drop-shadow-md" />
           </div>
         )}
 
@@ -303,10 +305,10 @@ const Trainer: React.FC = () => {
         {mode === 'elements' && (
             <>
                 <div className="mb-8">
-                <p className="text-slate-500 mb-4 font-medium uppercase tracking-wider">Назови элемент</p>
-                <div className="w-32 h-32 mx-auto bg-white rounded-3xl shadow-lg border-2 border-slate-100 flex flex-col items-center justify-center">
-                    <span className="text-5xl font-bold text-slate-800">{currentElement?.symbol}</span>
-                    <span className="text-sm text-slate-400 mt-1 font-mono">{currentElement?.number}</span>
+                <p className="text-slate-500 dark:text-zinc-400 mb-4 font-medium uppercase tracking-wider transition-colors">{t('trainer.nameElement')}</p>
+                <div className="w-32 h-32 mx-auto bg-white dark:bg-zinc-800 rounded-3xl shadow-lg border-2 border-slate-100 dark:border-zinc-600 flex flex-col items-center justify-center transition-colors">
+                    <span className="text-5xl font-bold text-slate-800 dark:text-zinc-100 transition-colors">{currentElement?.symbol}</span>
+                    <span className="text-sm text-slate-400 dark:text-zinc-500 mt-1 font-mono transition-colors">{currentElement?.number}</span>
                 </div>
                 </div>
 
@@ -320,7 +322,7 @@ const Trainer: React.FC = () => {
                         h-14 rounded-xl font-medium transition-all text-lg
                         ${feedback && opt === currentElement?.name ? 'bg-green-500 text-white shadow-green-200' : ''}
                         ${feedback === 'wrong' && opt !== currentElement?.name ? 'opacity-50' : ''}
-                        ${!feedback ? 'bg-white border border-slate-200 text-slate-700 hover:border-indigo-400 hover:text-indigo-600 shadow-sm' : ''}
+                        ${!feedback ? 'bg-white dark:bg-zinc-800 border border-slate-200 dark:border-zinc-600 text-slate-700 dark:text-zinc-200 hover:border-indigo-400 dark:hover:border-indigo-500 hover:text-indigo-600 dark:hover:text-indigo-400 shadow-sm' : ''}
                     `}
                     >
                     {opt}
@@ -333,23 +335,23 @@ const Trainer: React.FC = () => {
         {/* Balancing Mode UI (Simplified) */}
         {mode === 'balancing' && equation && (
             <div className="space-y-6">
-                <div className="text-xl font-mono bg-white p-4 rounded-xl border border-slate-200 shadow-sm inline-block">
+                <div className="text-xl font-mono bg-white dark:bg-zinc-800 p-4 rounded-xl border border-slate-200 dark:border-zinc-600 shadow-sm inline-block text-slate-800 dark:text-zinc-100 transition-colors">
                     {equation.unbalanced.replace(/->/g, '→')}
                 </div>
                 <div className="flex justify-center gap-2 items-center flex-wrap">
                     {/* Placeholder for interactive coefficients - just a visual mock for this constraint level */}
-                    <p className="text-slate-500 text-sm">Введите коэффициенты (симуляция):</p>
+                    <p className="text-slate-500 dark:text-zinc-400 text-sm transition-colors">{t('trainer.enterCoefficients')}</p>
                     <div className="flex gap-2">
                         {equation.unbalanced.split('+').map((_,i) => (
-                             <input key={i} className="w-12 h-12 text-center text-xl font-bold border rounded-lg bg-white" placeholder="?" />
+                             <input key={i} className="w-12 h-12 text-center text-xl font-bold border rounded-lg bg-white dark:bg-zinc-800 border-slate-200 dark:border-zinc-600 text-slate-800 dark:text-zinc-100 transition-colors" placeholder="?" />
                         ))}
                     </div>
                 </div>
-                <button 
+                <button
                   onClick={handleBalanceCheck}
-                  className="px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/30 hover:bg-indigo-700 transition-all"
+                  className="px-8 py-3 bg-indigo-600 dark:bg-indigo-700 text-white font-bold rounded-xl shadow-lg shadow-indigo-500/30 dark:shadow-indigo-700/30 hover:bg-indigo-700 dark:hover:bg-indigo-600 transition-all"
                 >
-                    Проверить
+                    {t('trainer.check')}
                 </button>
             </div>
         )}

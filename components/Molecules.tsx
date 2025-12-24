@@ -10,13 +10,13 @@ declare global {
 }
 
 const MOLECULES = [
-  { name: "Вода", cid: "962" },
-  { name: "Кофеин", cid: "2519" },
-  { name: "Этанол", cid: "702" },
-  { name: "Глюкоза", cid: "5793" },
-  { name: "Аспирин", cid: "2244" },
-  { name: "Бензол", cid: "241" },
-  { name: "Метан", cid: "297" },
+  { nameKey: "water", cid: "962" },
+  { nameKey: "caffeine", cid: "2519" },
+  { nameKey: "ethanol", cid: "702" },
+  { nameKey: "glucose", cid: "5793" },
+  { nameKey: "aspirin", cid: "2244" },
+  { nameKey: "benzene", cid: "241" },
+  { nameKey: "methane", cid: "297" },
 ];
 
 const Molecules: React.FC = () => {
@@ -70,7 +70,7 @@ const Molecules: React.FC = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Sidebar */}
-        <div className="lg:col-span-1 space-y-2 max-h-[500px] overflow-y-auto pr-2">
+        <div className="lg:col-span-1 space-y-3 max-h-[500px] overflow-y-auto pr-2">
             {MOLECULES.map(mol => (
                 <button
                   key={mol.cid}
@@ -81,7 +81,7 @@ const Molecules: React.FC = () => {
                       : 'bg-white dark:bg-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-700 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700'
                   }`}
                 >
-                  {mol.name}
+                  {t(`molecules.${mol.nameKey}`)}
                 </button>
             ))}
         </div>

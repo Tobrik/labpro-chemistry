@@ -54,7 +54,7 @@ function AppContent() {
   const { theme, toggleTheme } = useTheme();
   const { currentLanguage, changeLanguage } = useLanguage();
   const [activeTab, setActiveTab] = useState<NavItem>('periodic-table');
-  const [showAuthModal, setShowAuthModal] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(true); // Show modal by default for non-authenticated users
 
   // Loading state
   if (loading) {
@@ -113,8 +113,8 @@ function AppContent() {
 
   return (
     <>
-      {/* Auth Modal - show when not authenticated */}
-      {!user && <AuthModal isOpen={!user} onClose={() => setShowAuthModal(false)} />}
+      {/* Auth Modal - show when not authenticated and modal not manually closed */}
+      {!user && showAuthModal && <AuthModal isOpen={true} onClose={() => setShowAuthModal(false)} />}
 
       <div className="min-h-screen bg-slate-50 dark:bg-zinc-900 transition-colors font-sans text-slate-900 dark:text-zinc-100">
 
@@ -127,8 +127,8 @@ function AppContent() {
                    <Beaker size={20} strokeWidth={2.5} />
                  </div>
                  <div>
-                   <h1 className="text-2xl font-bold tracking-tight">LabPro</h1>
-                   <p className="text-indigo-200 text-xs opacity-80">Инструменты для химических расчётов</p>
+                   <h1 className="text-2xl font-bold tracking-tight">{t('app.title')}</h1>
+                   <p className="text-indigo-200 text-xs opacity-80">{t('app.subtitle')}</p>
                  </div>
                </div>
 
@@ -190,14 +190,14 @@ function AppContent() {
         </header>
 
       {/* Navigation Pills */}
-      <div className="container mx-auto px-4 lg:px-8 -mt-8 relative z-20 mb-8">
-         <div className="flex overflow-x-auto gap-2 pb-2 scrollbar-thin scrollbar-thumb-indigo-300 scrollbar-track-transparent">
+      <div className="container mx-auto px-4 lg:px-8 -mt-8 relative z-[60] mb-8">
+         <div className="flex flex-wrap gap-2 pb-2">
            {navItems.filter(i => i.id !== 'admin').map((item) => (
              <button
                key={item.id}
                onClick={() => setActiveTab(item.id)}
                className={`
-                 flex items-center gap-2 px-5 py-3 rounded-xl font-medium whitespace-nowrap transition-all text-sm
+                 flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all text-sm
                  ${activeTab === item.id
                    ? 'bg-indigo-600 dark:bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
                    : 'bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-700 border border-slate-100 dark:border-zinc-700 shadow-sm'}

@@ -3,10 +3,12 @@ import { Scale, CheckCircle2, ArrowRight, Loader2 } from 'lucide-react';
 import { getOxidationStates } from '../chemistryUtils';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../src/context/AuthContext';
+import { useLanguage } from '../src/contexts/LanguageContext';
 
 const EquationBalancer: React.FC = () => {
   const { t } = useTranslation();
   const { token } = useAuth();
+  const { currentLanguage } = useLanguage();
   const [equation, setEquation] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -34,7 +36,8 @@ const EquationBalancer: React.FC = () => {
         },
         body: JSON.stringify({
           action: 'balance-equation',
-          equation: equation
+          equation: equation,
+          language: currentLanguage
         }),
       });
 

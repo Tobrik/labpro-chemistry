@@ -4,9 +4,11 @@ import { compareSubstancesAI } from '../services/gemini';
 import { ComparisonResult } from '../types';
 import ReactMarkdown from 'react-markdown';
 import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../src/contexts/LanguageContext';
 
 const Comparison: React.FC = () => {
   const { t } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const [subA, setSubA] = useState('');
   const [subB, setSubB] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,7 +20,7 @@ const Comparison: React.FC = () => {
     setResult(null);
 
     try {
-      const data = await compareSubstancesAI(subA, subB);
+      const data = await compareSubstancesAI(subA, subB, currentLanguage);
       setResult(data);
     } catch (err) {
       console.error(err);

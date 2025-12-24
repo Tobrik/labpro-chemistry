@@ -34,9 +34,9 @@ const authenticatedFetch = async (url: string, body: any): Promise<any> => {
 /**
  * Balances a chemical equation using the backend API
  */
-export const balanceEquationAI = async (equation: string): Promise<BalancerResult> => {
+export const balanceEquationAI = async (equation: string, language: 'ru' | 'en' | 'kk' = 'ru'): Promise<BalancerResult> => {
   try {
-    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'balance-equation', equation });
+    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'balance-equation', equation, language });
   } catch (error) {
     console.error("Balancing error:", error);
     throw new Error("Failed to balance equation using AI.");
@@ -46,9 +46,9 @@ export const balanceEquationAI = async (equation: string): Promise<BalancerResul
 /**
  * Compares two substances using the backend API
  */
-export const compareSubstancesAI = async (substanceA: string, substanceB: string): Promise<ComparisonResult> => {
+export const compareSubstancesAI = async (substanceA: string, substanceB: string, language: 'ru' | 'en' | 'kk' = 'ru'): Promise<ComparisonResult> => {
   try {
-    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'compare-substances', substanceA, substanceB });
+    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'compare-substances', substanceA, substanceB, language });
   } catch (error) {
     console.error("Comparison error:", error);
     throw new Error("Failed to compare substances.");

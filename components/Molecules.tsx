@@ -38,11 +38,14 @@ const Molecules: React.FC = () => {
     } else {
         // Update background color when theme changes
         glRef.current.setBackgroundColor(theme === 'dark' ? '#18181b' : 'white');
-        glRef.current.render();
     }
 
     const viewer = glRef.current;
     setLoading(true);
+
+    // IMPORTANT: Clear all previous models before loading new one
+    viewer.removeAllModels();
+    viewer.clear();
 
     window.$3Dmol.download(`cid:${selectedMol.cid}`, viewer, {
         multimodel: true,
@@ -68,14 +71,14 @@ const Molecules: React.FC = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        {/* Sidebar */}
-        <div className="lg:col-span-1 space-y-3 max-h-[500px] overflow-y-auto pr-2">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 md:gap-6">
+        {/* Sidebar - horizontal scroll on mobile, vertical on desktop */}
+        <div className="lg:col-span-1 flex lg:flex-col gap-2 lg:gap-3 overflow-x-auto lg:overflow-x-visible lg:max-h-[500px] lg:overflow-y-auto pb-2 lg:pb-0 lg:pr-2 scrollbar-thin">
             {MOLECULES.map(mol => (
                 <button
                   key={mol.cid}
                   onClick={() => setSelectedMol(mol)}
-                  className={`w-full text-left px-4 py-3 rounded-xl transition-all font-medium ${
+                  className={`flex-shrink-0 lg:w-full text-left px-3 md:px-4 py-2 md:py-3 rounded-lg md:rounded-xl transition-all font-medium text-sm md:text-base whitespace-nowrap ${
                     selectedMol.cid === mol.cid
                       ? 'bg-indigo-600 dark:bg-indigo-500 text-white shadow-md'
                       : 'bg-white dark:bg-zinc-800 hover:bg-slate-50 dark:hover:bg-zinc-700 text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700'
@@ -86,17 +89,17 @@ const Molecules: React.FC = () => {
             ))}
         </div>
 
-        {/* Viewer Area */}
-        <div className="lg:col-span-3 h-[500px] bg-slate-50 dark:bg-zinc-900 rounded-2xl border border-slate-200 dark:border-zinc-700 relative overflow-hidden shadow-inner transition-colors isolate">
+        {/* Viewer Area - responsive height */}
+        <div className="lg:col-span-3 h-[300px] md:h-[400px] lg:h-[500px] bg-slate-50 dark:bg-zinc-900 rounded-xl md:rounded-2xl border border-slate-200 dark:border-zinc-700 relative overflow-hidden shadow-inner transition-colors isolate">
              {loading && (
                  <div className="absolute inset-0 flex items-center justify-center bg-white/80 dark:bg-zinc-800/80 z-10 backdrop-blur-sm">
-                     <Loader2 className="animate-spin text-indigo-600 dark:text-indigo-400" size={40} />
+                     <Loader2 className="animate-spin text-indigo-600 dark:text-indigo-400" size={32} />
                  </div>
              )}
 
              <div id="mol-container" ref={viewerRef} className="w-full h-full relative z-0"></div>
 
-             <div className="absolute bottom-4 left-4 bg-white/90 dark:bg-zinc-800/90 backdrop-blur px-3 py-1.5 rounded-lg text-xs font-medium text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 z-10">
+             <div className="absolute bottom-2 md:bottom-4 left-2 md:left-4 bg-white/90 dark:bg-zinc-800/90 backdrop-blur px-2 md:px-3 py-1 md:py-1.5 rounded-md md:rounded-lg text-[10px] md:text-xs font-medium text-slate-600 dark:text-zinc-300 border border-slate-200 dark:border-zinc-700 z-10">
                  {t('molecules.hint')}
              </div>
         </div>

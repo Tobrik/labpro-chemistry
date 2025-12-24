@@ -119,25 +119,28 @@ function AppContent() {
       <div className="min-h-screen bg-slate-50 dark:bg-zinc-900 transition-colors font-sans text-slate-900 dark:text-zinc-100">
 
         {/* Header */}
-        <header className="bg-[#1e1b4b] dark:bg-zinc-900 text-white pt-6 pb-20 relative z-30 transition-colors">
-          <div className="container mx-auto px-4 lg:px-8">
-             <div className="flex items-center justify-between mb-2">
-               <div className="flex items-center gap-4">
-                 <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-white backdrop-blur-sm border border-white/20">
-                   <Beaker size={20} strokeWidth={2.5} />
+        <header className="bg-[#1e1b4b] dark:bg-zinc-900 text-white pt-4 md:pt-6 pb-16 md:pb-20 relative z-30 transition-colors">
+          <div className="container mx-auto px-3 md:px-4 lg:px-8">
+             <div className="flex items-center justify-between gap-2">
+               {/* Logo - компактный на мобильных */}
+               <div className="flex items-center gap-2 md:gap-4 flex-shrink-0">
+                 <div className="w-8 h-8 md:w-10 md:h-10 bg-white/10 rounded-lg flex items-center justify-center text-white backdrop-blur-sm border border-white/20">
+                   <Beaker size={16} className="md:hidden" strokeWidth={2.5} />
+                   <Beaker size={20} className="hidden md:block" strokeWidth={2.5} />
                  </div>
                  <div>
-                   <h1 className="text-2xl font-bold tracking-tight">{t('app.title')}</h1>
-                   <p className="text-indigo-200 text-xs opacity-80">{t('app.subtitle')}</p>
+                   <h1 className="text-lg md:text-2xl font-bold tracking-tight">{t('app.title')}</h1>
+                   <p className="text-indigo-200 text-[10px] md:text-xs opacity-80 hidden sm:block">{t('app.subtitle')}</p>
                  </div>
                </div>
 
-               <div className="flex items-center gap-3">
-                 {/* Language selector */}
+               {/* Controls - адаптивные */}
+               <div className="flex items-center gap-1.5 md:gap-3 flex-shrink-0">
+                 {/* Language selector - компактный */}
                  <select
                    value={currentLanguage}
                    onChange={(e) => changeLanguage(e.target.value as 'ru' | 'en' | 'kk')}
-                   className="px-3 py-1.5 text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-colors cursor-pointer text-white border border-white/10"
+                   className="px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-colors cursor-pointer text-white border border-white/10"
                  >
                    <option value="ru" className="bg-slate-800">🇷🇺 RU</option>
                    <option value="en" className="bg-slate-800">🇬🇧 EN</option>
@@ -147,30 +150,33 @@ function AppContent() {
                  {/* Theme toggle */}
                  <button
                    onClick={toggleTheme}
-                   className="p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+                   className="p-1.5 md:p-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
                    title={theme === 'light' ? 'Темная тема' : 'Светлая тема'}
                  >
-                   {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
+                   <Moon size={16} className="md:hidden" />
+                   <Sun size={16} className="md:hidden" />
+                   {theme === 'light' ? <Moon size={18} className="hidden md:block" /> : <Sun size={18} className="hidden md:block" />}
                  </button>
 
-                 {/* User info */}
+                 {/* User info - скрыто на мобильных */}
                  {user && (
-                   <div className="text-right text-xs">
-                     <p className="text-white/90">{user.displayName || user.email}</p>
+                   <div className="text-right text-xs hidden lg:block">
+                     <p className="text-white/90 truncate max-w-[120px]">{user.displayName || user.email}</p>
                      {userRole === 'admin' && (
                        <p className="text-indigo-300 dark:text-indigo-400">Администратор</p>
                      )}
                    </div>
                  )}
 
-                 {/* Logout button */}
+                 {/* Logout button - иконка на мобильных */}
                  {user && (
                    <button
                       onClick={() => logout()}
-                      className="px-3 py-1.5 text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
+                      className="px-2 md:px-3 py-1 md:py-1.5 text-xs md:text-sm bg-white/10 hover:bg-white/20 rounded-lg transition-colors"
                       title={t('app.logout')}
                    >
-                      {t('app.logout')}
+                      <span className="hidden md:inline">{t('app.logout')}</span>
+                      <span className="md:hidden">Exit</span>
                    </button>
                  )}
 
@@ -178,10 +184,11 @@ function AppContent() {
                  {userRole === 'admin' && (
                    <button
                       onClick={() => setActiveTab('admin')}
-                      className="opacity-50 hover:opacity-100 transition-opacity"
+                      className="opacity-50 hover:opacity-100 transition-opacity p-1"
                       title="Admin Panel"
                    >
-                      <ShieldAlert size={20} />
+                      <ShieldAlert size={18} className="md:hidden" />
+                      <ShieldAlert size={20} className="hidden md:block" />
                    </button>
                  )}
                </div>
@@ -190,21 +197,21 @@ function AppContent() {
         </header>
 
       {/* Navigation Pills */}
-      <div className="container mx-auto px-4 lg:px-8 -mt-8 relative z-[60] mb-8">
-         <div className="flex flex-wrap gap-2 pb-2">
+      <div className="container mx-auto px-3 md:px-4 lg:px-8 -mt-8 md:-mt-8 relative z-[60] mb-6 md:mb-8">
+         <div className="flex flex-wrap gap-1.5 md:gap-2 pb-2 justify-center md:justify-start">
            {navItems.filter(i => i.id !== 'admin').map((item) => (
              <button
                key={item.id}
                onClick={() => setActiveTab(item.id)}
                className={`
-                 flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium whitespace-nowrap transition-all text-sm
+                 flex items-center gap-1 md:gap-2 px-2 md:px-4 py-1.5 md:py-2.5 rounded-lg md:rounded-xl font-medium whitespace-nowrap transition-all text-xs md:text-sm
                  ${activeTab === item.id
                    ? 'bg-indigo-600 dark:bg-indigo-500 text-white shadow-lg shadow-indigo-500/30'
                    : 'bg-white dark:bg-zinc-800 text-slate-600 dark:text-zinc-300 hover:bg-slate-50 dark:hover:bg-zinc-700 border border-slate-100 dark:border-zinc-700 shadow-sm'}
                `}
              >
-               {item.icon}
-               <span>{item.label}</span>
+               <span className="scale-75 md:scale-100">{item.icon}</span>
+               <span className="hidden sm:inline">{item.label}</span>
              </button>
            ))}
          </div>

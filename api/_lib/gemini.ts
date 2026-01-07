@@ -118,10 +118,21 @@ Format the response in clear, readable text with proper formatting.`;
 export async function translateElement(elementName: string, targetLang: 'ru' | 'en' | 'kk') {
   const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
-  const langMap = { ru: 'Russian', en: 'English', kk: 'Kazakh' };
-  const prompt = `Provide detailed information about the chemical element "${elementName}" in ${langMap[targetLang]}.
+  const prompts = {
+    ru: `Предоставь подробную информацию об элементе "${elementName}" в формате JSON со следующими полями:
+{
+  "electronConfiguration": "электронная конфигурация",
+  "electronShells": "распределение электронов по оболочкам",
+  "oxidationStates": "степени окисления",
+  "meltingPoint": "температура плавления",
+  "boilingPoint": "температура кипения",
+  "density": "плотность",
+  "discoveryYear": "год открытия",
+  "description": "краткое описание (2-3 предложения)"
+}
 
-Return ONLY a JSON object with this exact structure:
+Ответ должен быть строго в формате JSON, без дополнительного текста.`,
+    en: `Provide detailed information about the element "${elementName}" in JSON format with the following fields:
 {
   "electronConfiguration": "electron configuration",
   "electronShells": "electron shell distribution",
@@ -130,9 +141,26 @@ Return ONLY a JSON object with this exact structure:
   "boilingPoint": "boiling point with units",
   "density": "density with units",
   "discoveryYear": "year of discovery",
-  "description": "brief description"
-}`;
+  "description": "brief description (2-3 sentences)"
+}
 
+The response must be strictly in JSON format, without additional text.`,
+    kk: `"${elementName}" элементі туралы JSON форматында мынадай өрістермен толық ақпарат беріңіз:
+{
+  "electronConfiguration": "электрондық конфигурация",
+  "electronShells": "электрондық қабықтар бойынша таралуы",
+  "oxidationStates": "тотығу дәрежелері",
+  "meltingPoint": "балқу температурасы",
+  "boilingPoint": "қайнау температурасы",
+  "density": "тығыздық",
+  "discoveryYear": "ашылған жыл",
+  "description": "қысқаша сипаттама (2-3 сөйлем)"
+}
+
+Жауап қосымша мәтінсіз тек JSON форматында болуы керек.`
+  };
+
+  const prompt = prompts[targetLang];
   const result = await model.generateContent(prompt);
   const text = result.response.text();
 

@@ -18,7 +18,10 @@ const MolarMass: React.FC = () => {
     if (!input.trim()) return;
 
     try {
-      const regex = /([A-Z][a-z]*)(\d*)/g;
+      // Updated regex to properly match elements:
+      // ([A-Z][a-z]?]) matches one uppercase letter optionally followed by ONE lowercase letter
+      // This ensures Cl is matched as a whole, not as C and l separately
+      const regex = /([A-Z][a-z]?)(\d*)/g;
       let match;
       let totalMass = 0;
       const elements: string[] = [];
@@ -27,7 +30,7 @@ const MolarMass: React.FC = () => {
       while ((match = regex.exec(input)) !== null) {
         const element = match[1];
         const count = match[2] ? parseInt(match[2]) : 1;
-        
+
         validLength += match[0].length;
 
         if (ATOMIC_MASSES[element]) {

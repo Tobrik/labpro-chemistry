@@ -10,11 +10,12 @@ export class GeminiService {
   /**
    * Get detailed element information using Gemini Flash model
    */
-  async getElementDetails(elementName: string): Promise<ElementDetailsResponse> {
+  async getElementDetails(elementName: string, language: 'ru' | 'en' | 'kk' = 'ru'): Promise<ElementDetailsResponse> {
     try {
       const model = getFlashModel();
 
-      const prompt = `Предоставь подробную информацию об элементе "${elementName}" в формате JSON со следующими полями:
+      const prompts = {
+        ru: `Предоставь подробную информацию об элементе "${elementName}" в формате JSON со следующими полями:
 {
   "electronConfiguration": "электронная конфигурация",
   "electronShells": "распределение электронов по оболочкам",
@@ -26,8 +27,36 @@ export class GeminiService {
   "description": "краткое описание (2-3 предложения)"
 }
 
-Ответ должен быть строго в формате JSON, без дополнительного текста.`;
+Ответ должен быть строго в формате JSON, без дополнительного текста.`,
+        en: `Provide detailed information about the element "${elementName}" in JSON format with the following fields:
+{
+  "electronConfiguration": "electron configuration",
+  "electronShells": "electron shell distribution",
+  "oxidationStates": "oxidation states",
+  "meltingPoint": "melting point",
+  "boilingPoint": "boiling point",
+  "density": "density",
+  "discoveryYear": "discovery year",
+  "description": "brief description (2-3 sentences)"
+}
 
+The response must be strictly in JSON format, without additional text.`,
+        kk: `"${elementName}" элементі туралы JSON форматында мынадай өрістермен толық ақпарат беріңіз:
+{
+  "electronConfiguration": "электрондық конфигурация",
+  "electronShells": "электрондық қабықтар бойынша таралуы",
+  "oxidationStates": "тотығу дәрежелері",
+  "meltingPoint": "балқу температурасы",
+  "boilingPoint": "қайнау температурасы",
+  "density": "тығыздық",
+  "discoveryYear": "ашылған жыл",
+  "description": "қысқаша сипаттама (2-3 сөйлем)"
+}
+
+Жауап қосымша мәтінсіз тек JSON форматында болуы керек.`
+      };
+
+      const prompt = prompts[language];
       const result = await model.generateContent(prompt);
       const response = result.response;
       const text = response.text();
@@ -49,11 +78,12 @@ export class GeminiService {
   /**
    * Balance chemical equation using Gemini Pro model with thinking
    */
-  async balanceEquation(equation: string): Promise<BalanceEquationResponse> {
+  async balanceEquation(equation: string, language: 'ru' | 'en' | 'kk' = 'ru'): Promise<BalanceEquationResponse> {
     try {
       const model = getProModel();
 
-      const prompt = `Уравняй химическое уравнение: ${equation}
+      const prompts = {
+        ru: `Уравняй химическое уравнение: ${equation}
 
 Предоставь ответ в формате JSON:
 {
@@ -61,8 +91,28 @@ export class GeminiService {
   "explanation": "краткое объяснение процесса уравнивания"
 }
 
-Используй стрелку → вместо =. Ответ должен быть строго в формате JSON.`;
+Используй стрелку → вместо =. Ответ должен быть строго в формате JSON.`,
+        en: `Balance the chemical equation: ${equation}
 
+Provide the answer in JSON format:
+{
+  "balancedEquation": "balanced equation with coefficients",
+  "explanation": "brief explanation of the balancing process"
+}
+
+Use the arrow → instead of =. The answer must be strictly in JSON format.`,
+        kk: `Химиялық теңдеуді теңестіріңіз: ${equation}
+
+Жауапты JSON форматында беріңіз:
+{
+  "balancedEquation": "коэффициенттері бар теңестірілген теңдеу",
+  "explanation": "теңестіру процесінің қысқаша түсініктемесі"
+}
+
+= орнына → бағдаршасын қолданыңыз. Жауап тек JSON форматында болуы керек.`
+      };
+
+      const prompt = prompts[language];
       const result = await model.generateContent(prompt);
       const response = result.response;
       const text = response.text();
@@ -85,12 +135,14 @@ export class GeminiService {
    */
   async compareSubstances(
     substanceA: string,
-    substanceB: string
+    substanceB: string,
+    language: 'ru' | 'en' | 'kk' = 'ru'
   ): Promise<CompareSubstancesResponse> {
     try {
       const model = getFlashModel();
 
-      const prompt = `Сравни два вещества: ${substanceA} и ${substanceB}.
+      const prompts = {
+        ru: `Сравни два вещества: ${substanceA} и ${substanceB}.
 
 Предоставь подробное сравнение, включая:
 - Химические свойства
@@ -98,8 +150,28 @@ export class GeminiService {
 - Применение
 - Различия и сходства
 
-Ответ должен быть развернутым, на русском языке.`;
+Ответ должен быть развернутым, на русском языке.`,
+        en: `Compare two substances: ${substanceA} and ${substanceB}.
 
+Provide a detailed comparison, including:
+- Chemical properties
+- Physical properties
+- Applications
+- Differences and similarities
+
+The answer should be comprehensive in English.`,
+        kk: `Екі затты салыстырыңыз: ${substanceA} және ${substanceB}.
+
+Мынаны қамтитын толық салыстыру беріңіз:
+- Химиялық қасиеттер
+- Физикалық қасиеттер
+- Қолдану
+- Айырмашылықтар мен ұқсастықтар
+
+Жауап қазақ тілінде толық болуы керек.`
+      };
+
+      const prompt = prompts[language];
       const result = await model.generateContent(prompt);
       const response = result.response;
       const text = response.text();

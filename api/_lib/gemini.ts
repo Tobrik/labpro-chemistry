@@ -119,19 +119,21 @@ export async function translateElement(elementName: string, targetLang: 'ru' | '
   const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
   const prompts = {
-    ru: `Предоставь подробную информацию об элементе "${elementName}" в формате JSON со следующими полями:
+    ru: `ВАЖНО: Отвечай ТОЛЬКО на русском языке!
+
+Предоставь подробную информацию об элементе "${elementName}" в формате JSON. ВСЕ значения должны быть на РУССКОМ языке:
 {
-  "electronConfiguration": "электронная конфигурация",
-  "electronShells": "распределение электронов по оболочкам",
-  "oxidationStates": "степени окисления",
-  "meltingPoint": "температура плавления",
-  "boilingPoint": "температура кипения",
-  "density": "плотность",
+  "electronConfiguration": "электронная конфигурация элемента",
+  "electronShells": "распределение электронов по оболочкам (например: 2, 8, 1)",
+  "oxidationStates": "степени окисления на русском",
+  "meltingPoint": "температура плавления с единицами измерения на русском",
+  "boilingPoint": "температура кипения с единицами измерения на русском",
+  "density": "плотность с единицами измерения на русском",
   "discoveryYear": "год открытия",
-  "description": "краткое описание (2-3 предложения)"
+  "description": "краткое описание элемента на РУССКОМ языке (2-3 предложения)"
 }
 
-Ответ должен быть строго в формате JSON, без дополнительного текста.`,
+ОБЯЗАТЕЛЬНО: Все текстовые значения, включая description, должны быть на РУССКОМ языке. Ответ строго в формате JSON.`,
     en: `Provide detailed information about the element "${elementName}" in JSON format with the following fields:
 {
   "electronConfiguration": "electron configuration",
@@ -145,19 +147,21 @@ export async function translateElement(elementName: string, targetLang: 'ru' | '
 }
 
 The response must be strictly in JSON format, without additional text.`,
-    kk: `"${elementName}" элементі туралы JSON форматында мынадай өрістермен толық ақпарат беріңіз:
+    kk: `МАҢЫЗДЫ: Тек қазақ тілінде жауап беріңіз!
+
+"${elementName}" элементі туралы JSON форматында толық ақпарат беріңіз. БАРЛЫҚ мәндер ҚАЗАҚ тілінде болуы керек:
 {
   "electronConfiguration": "электрондық конфигурация",
-  "electronShells": "электрондық қабықтар бойынша таралуы",
-  "oxidationStates": "тотығу дәрежелері",
-  "meltingPoint": "балқу температурасы",
-  "boilingPoint": "қайнау температурасы",
-  "density": "тығыздық",
+  "electronShells": "электрондық қабықтар бойынша таралуы (мысалы: 2, 8, 1)",
+  "oxidationStates": "тотығу дәрежелері қазақша",
+  "meltingPoint": "балқу температурасы өлшем бірліктерімен қазақша",
+  "boilingPoint": "қайнау температурасы өлшем бірліктерімен қазақша",
+  "density": "тығыздық өлшем бірліктерімен қазақша",
   "discoveryYear": "ашылған жыл",
-  "description": "қысқаша сипаттама (2-3 сөйлем)"
+  "description": "элементтің ҚАЗАҚ тіліндегі қысқаша сипаттамасы (2-3 сөйлем)"
 }
 
-Жауап қосымша мәтінсіз тек JSON форматында болуы керек.`
+МІНДЕТТІ: description қоса барлық мәтіндік мәндер ҚАЗАҚ тілінде болуы керек. Жауап тек JSON форматында.`
   };
 
   const prompt = prompts[targetLang];

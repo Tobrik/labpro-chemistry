@@ -145,7 +145,7 @@ const EquationBalancer: React.FC = () => {
 
            {Object.keys(oxidationStates).length > 0 && (
              <div className="border-t border-slate-200 dark:border-zinc-700 pt-4">
-               <h4 className="text-sm font-bold text-slate-500 dark:text-zinc-400 uppercase mb-3">Степени окисления</h4>
+               <h4 className="text-sm font-bold text-slate-500 dark:text-zinc-400 uppercase mb-3">{t('aiBalancer.oxidationStates')}</h4>
                <div className="flex flex-wrap gap-4">
                  {Object.entries(oxidationStates).map(([formula, states]) => (
                    <div key={formula} className="bg-white dark:bg-zinc-800 px-3 py-2 rounded-lg border border-slate-200 dark:border-zinc-700 shadow-sm">

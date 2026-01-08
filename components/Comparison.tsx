@@ -48,7 +48,7 @@ const Comparison: React.FC = () => {
             type="text"
             value={subA}
             onChange={(e) => setSubA(e.target.value)}
-            placeholder="например, Золото"
+            placeholder={t('aiCompare.placeholderA')}
             className="w-full h-12 px-4 bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-400 transition-all"
            />
         </div>
@@ -58,7 +58,7 @@ const Comparison: React.FC = () => {
             type="text"
             value={subB}
             onChange={(e) => setSubB(e.target.value)}
-            placeholder="например, Серебро"
+            placeholder={t('aiCompare.placeholderB')}
             className="w-full h-12 px-4 bg-white dark:bg-zinc-800 text-slate-900 dark:text-zinc-100 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 dark:focus:ring-orange-400 transition-all"
            />
         </div>
@@ -81,7 +81,7 @@ const Comparison: React.FC = () => {
           {result.sources && result.sources.length > 0 && (
             <div className="mt-6 pt-4 border-t border-slate-200 dark:border-zinc-700">
               <h4 className="text-xs font-bold text-slate-400 dark:text-zinc-500 uppercase tracking-wider mb-3 flex items-center gap-2">
-                <LinkIcon size={12} /> Источники
+                <LinkIcon size={12} /> {t('aiCompare.sources')}
               </h4>
               <div className="flex flex-wrap gap-2">
                 {result.sources.map((source, idx) => (

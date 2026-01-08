@@ -37,16 +37,16 @@ const PeriodicTable: React.FC = () => {
 
   const categories: { id: ElementCategory | 'all'; label: string; }[] = [
     { id: 'all', label: t('periodicTable.allCategories') },
-    { id: 'non-metal', label: 'Non-metal' },
-    { id: 'noble-gas', label: 'Noble gas' },
-    { id: 'alkali-metal', label: 'Alkali metal' },
-    { id: 'alkaline-earth-metal', label: 'Alkaline earth' },
-    { id: 'metalloid', label: 'Metalloid' },
-    { id: 'halogen', label: 'Halogen' },
-    { id: 'transition-metal', label: 'Transition metal' },
-    { id: 'post-transition-metal', label: 'Post-transition' },
-    { id: 'lanthanide', label: 'Lanthanide' },
-    { id: 'actinide', label: 'Actinide' },
+    { id: 'non-metal', label: t('periodicTable.categories.non-metal') },
+    { id: 'noble-gas', label: t('periodicTable.categories.noble-gas') },
+    { id: 'alkali-metal', label: t('periodicTable.categories.alkali-metal') },
+    { id: 'alkaline-earth-metal', label: t('periodicTable.categories.alkaline-earth-metal') },
+    { id: 'metalloid', label: t('periodicTable.categories.metalloid') },
+    { id: 'halogen', label: t('periodicTable.categories.halogen') },
+    { id: 'transition-metal', label: t('periodicTable.categories.transition-metal') },
+    { id: 'post-transition-metal', label: t('periodicTable.categories.post-transition-metal') },
+    { id: 'lanthanide', label: t('periodicTable.categories.lanthanide') },
+    { id: 'actinide', label: t('periodicTable.categories.actinide') },
   ];
 
   const filteredElements = PERIODIC_ELEMENTS.filter(el => {
@@ -97,7 +97,7 @@ const PeriodicTable: React.FC = () => {
                 className="h-12 px-4 bg-white dark:bg-zinc-700 text-slate-900 dark:text-zinc-100 border border-slate-200 dark:border-zinc-600 rounded-xl outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400"
             >
                 <option value="all">{t('periodicTable.allCategories')}</option>
-                {[1,2,3,4,5,6,7].map(p => <option key={p} value={p}>Period {p}</option>)}
+                {[1,2,3,4,5,6,7].map(p => <option key={p} value={p}>{t('periodicTable.period')} {p}</option>)}
             </select>
         </div>
       </div>
@@ -164,8 +164,8 @@ const PeriodicTable: React.FC = () => {
                     <h2 className="text-3xl md:text-4xl font-bold text-slate-800 dark:text-zinc-100 mb-1">{selectedElement.name}</h2>
                     <p className="text-slate-500 dark:text-zinc-400 capitalize">{categories.find(c => c.id === selectedElement.category)?.label}</p>
                     <div className="flex gap-2 mt-2">
-                         <button onClick={() => setTab('info')} className={`px-3 py-1 rounded-lg text-xs font-bold border transition-colors ${tab === 'info' ? 'bg-indigo-600 dark:bg-indigo-500 text-white border-indigo-600 dark:border-indigo-500' : 'bg-white dark:bg-zinc-700 text-slate-500 dark:text-zinc-300 border-slate-200 dark:border-zinc-600'}`}>Info</button>
-                         <button onClick={() => setTab('timeline')} className={`px-3 py-1 rounded-lg text-xs font-bold border transition-colors ${tab === 'timeline' ? 'bg-indigo-600 dark:bg-indigo-500 text-white border-indigo-600 dark:border-indigo-500' : 'bg-white dark:bg-zinc-700 text-slate-500 dark:text-zinc-300 border-slate-200 dark:border-zinc-600'}`}>History</button>
+                         <button onClick={() => setTab('info')} className={`px-3 py-1 rounded-lg text-xs font-bold border transition-colors ${tab === 'info' ? 'bg-indigo-600 dark:bg-indigo-500 text-white border-indigo-600 dark:border-indigo-500' : 'bg-white dark:bg-zinc-700 text-slate-500 dark:text-zinc-300 border-slate-200 dark:border-zinc-600'}`}>{t('periodicTable.info')}</button>
+                         <button onClick={() => setTab('timeline')} className={`px-3 py-1 rounded-lg text-xs font-bold border transition-colors ${tab === 'timeline' ? 'bg-indigo-600 dark:bg-indigo-500 text-white border-indigo-600 dark:border-indigo-500' : 'bg-white dark:bg-zinc-700 text-slate-500 dark:text-zinc-300 border-slate-200 dark:border-zinc-600'}`}>{t('periodicTable.history')}</button>
                     </div>
                   </div>
                </div>
@@ -228,7 +228,7 @@ const PeriodicTable: React.FC = () => {
                      <div className="bg-white dark:bg-zinc-700 p-4 rounded-2xl border border-slate-100 dark:border-zinc-600 shadow-sm transition-colors">
                        <div className="flex items-center gap-2 mb-3 text-rose-500 dark:text-rose-400">
                          <Thermometer size={20} />
-                         <h3 className="font-bold">Physical Properties</h3>
+                         <h3 className="font-bold">{t('periodicTable.physicalProperties')}</h3>
                        </div>
                        <div className="space-y-3">
                           <div className="flex justify-between items-center border-b border-slate-50 dark:border-zinc-600 pb-2">

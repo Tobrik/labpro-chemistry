@@ -63,7 +63,10 @@
     "substanceA": "Зат A",
     "substanceB": "Зат B",
     "compare": "Салыстыру",
-    "result": "Нәтиже"
+    "result": "Нәтиже",
+    "placeholderA": "мысалы, Алтын",
+    "placeholderB": "мысалы, Күміс",
+    "sources": "Дереккөздер"
   },
   "aiBalancer": {
     "title": "AI Реакция теңестіргіші",
@@ -72,7 +75,8 @@
     "placeholder": "мысалы: Fe + O2 = Fe2O3",
     "balance": "Теңестіру",
     "result": "Теңдеу теңестірілді",
-    "explanation": "Түсініктеме"
+    "explanation": "Түсініктеме",
+    "oxidationStates": "Тотығу дәрежелері"
   },
   "trainer": {
     "title": "Химиялық жаттықтырғыш",
@@ -112,14 +116,33 @@
     "boilingPoint": "Қайнау температурасы",
     "density": "Тығыздық",
     "discoveryYear": "Ашылған жыл",
-    "description": "Сипаттама"
+    "description": "Сипаттама",
+    "physicalProperties": "Физикалық қасиеттер",
+    "info": "Ақпарат",
+    "history": "Тарих",
+    "period": "Период",
+    "categories": {
+      "non-metal": "Бейметалл",
+      "noble-gas": "Асыл газ",
+      "alkali-metal": "Сілтілік металл",
+      "alkaline-earth-metal": "Сілтілік-жер",
+      "metalloid": "Металлоид",
+      "halogen": "Галоген",
+      "transition-metal": "Өтпелі металл",
+      "post-transition-metal": "Өтпелі кейінгі",
+      "lanthanide": "Лантаноид",
+      "actinide": "Актиноид"
+    }
   },
   "molarMass": {
     "title": "Молярлық масса",
     "subtitle": "Заттың молярлық массасын есептеу",
     "formula": "Химиялық формула",
     "placeholder": "мысалы: H2O, NaCl, Ca(OH)2",
-    "result": "Есептеу нәтижесі"
+    "result": "Есептеу нәтижесі",
+    "composition": "Құрам",
+    "unknownElement": "Белгісіз элемент",
+    "invalidFormula": "Қате химиялық формула"
   },
   "solutions": {
     "title": "Ерітінділер және сұйылту",

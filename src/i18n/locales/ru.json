@@ -63,7 +63,10 @@
     "substanceA": "Вещество A",
     "substanceB": "Вещество B",
     "compare": "Сравнить",
-    "result": "Результат"
+    "result": "Результат",
+    "placeholderA": "например, Золото",
+    "placeholderB": "например, Серебро",
+    "sources": "Источники"
   },
   "aiBalancer": {
     "title": "AI Уравнитель реакций",
@@ -72,7 +75,8 @@
     "placeholder": "например: Fe + O2 = Fe2O3",
     "balance": "Уравнять",
     "result": "Уравнение уравнено",
-    "explanation": "Пояснение"
+    "explanation": "Пояснение",
+    "oxidationStates": "Степени окисления"
   },
   "trainer": {
     "title": "Химический тренажёр",
@@ -112,14 +116,33 @@
     "boilingPoint": "Температура кипения",
     "density": "Плотность",
     "discoveryYear": "Год открытия",
-    "description": "Описание"
+    "description": "Описание",
+    "physicalProperties": "Физические свойства",
+    "info": "Инфо",
+    "history": "История",
+    "period": "Период",
+    "categories": {
+      "non-metal": "Неметалл",
+      "noble-gas": "Благородный газ",
+      "alkali-metal": "Щелочной металл",
+      "alkaline-earth-metal": "Щелочноземельный",
+      "metalloid": "Металлоид",
+      "halogen": "Галоген",
+      "transition-metal": "Переходный металл",
+      "post-transition-metal": "Постпереходный",
+      "lanthanide": "Лантаноид",
+      "actinide": "Актиноид"
+    }
   },
   "molarMass": {
     "title": "Молярная масса",
     "subtitle": "Расчёт молярной массы вещества",
     "formula": "Химическая формула",
     "placeholder": "например: H2O, NaCl, Ca(OH)2",
-    "result": "Результат расчёта"
+    "result": "Результат расчёта",
+    "composition": "Состав",
+    "unknownElement": "Неизвестный элемент",
+    "invalidFormula": "Неверная химическая формула"
   },
   "solutions": {
     "title": "Растворы и разбавления",

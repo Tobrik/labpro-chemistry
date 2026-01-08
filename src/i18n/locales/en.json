@@ -63,7 +63,10 @@
     "substanceA": "Substance A",
     "substanceB": "Substance B",
     "compare": "Compare",
-    "result": "Result"
+    "result": "Result",
+    "placeholderA": "e.g., Gold",
+    "placeholderB": "e.g., Silver",
+    "sources": "Sources"
   },
   "aiBalancer": {
     "title": "AI Equation Balancer",
@@ -72,7 +75,8 @@
     "placeholder": "e.g.: Fe + O2 = Fe2O3",
     "balance": "Balance",
     "result": "Equation balanced",
-    "explanation": "Explanation"
+    "explanation": "Explanation",
+    "oxidationStates": "Oxidation States"
   },
   "trainer": {
     "title": "Chemistry Trainer",
@@ -112,14 +116,33 @@
     "boilingPoint": "Boiling point",
     "density": "Density",
     "discoveryYear": "Discovery year",
-    "description": "Description"
+    "description": "Description",
+    "physicalProperties": "Physical Properties",
+    "info": "Info",
+    "history": "History",
+    "period": "Period",
+    "categories": {
+      "non-metal": "Non-metal",
+      "noble-gas": "Noble gas",
+      "alkali-metal": "Alkali metal",
+      "alkaline-earth-metal": "Alkaline earth",
+      "metalloid": "Metalloid",
+      "halogen": "Halogen",
+      "transition-metal": "Transition metal",
+      "post-transition-metal": "Post-transition",
+      "lanthanide": "Lanthanide",
+      "actinide": "Actinide"
+    }
   },
   "molarMass": {
     "title": "Molar Mass",
     "subtitle": "Calculate molar mass",
     "formula": "Chemical formula",
     "placeholder": "e.g.: H2O, NaCl, Ca(OH)2",
-    "result": "Calculation result"
+    "result": "Calculation result",
+    "composition": "Composition",
+    "unknownElement": "Unknown element",
+    "invalidFormula": "Invalid chemical formula"
   },
   "solutions": {
     "title": "Solutions and Dilutions",

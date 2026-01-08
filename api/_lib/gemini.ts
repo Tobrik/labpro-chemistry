@@ -116,70 +116,58 @@ Format the response in clear, readable text with proper formatting.`;
 }
 
 export async function translateElement(elementName: string, targetLang: 'ru' | 'en' | 'kk') {
-  const langConfig = {
-    ru: {
-      systemInstruction: 'Ты химический справочник. Отвечай ТОЛЬКО на русском языке. Все ответы должны быть на русском.',
-      prompt: `Предоставь информацию о химическом элементе "${elementName}".
+  // Use gemini-1.5-flash which better supports language instructions
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-1.5-flash',
+  });
 
-Верни JSON объект со следующими полями (ВСЕ значения на РУССКОМ языке):
+  const prompts = {
+    ru: `Ты — русскоязычный химический справочник. Твоя задача — предоставить информацию о химическом элементе "${elementName}" СТРОГО НА РУССКОМ ЯЗЫКЕ.
+
+ВНИМАНИЕ: ВСЕ текстовые поля в ответе ДОЛЖНЫ быть на РУССКОМ языке. Это обязательное требование.
+
+Верни ТОЛЬКО JSON объект (без markdown, без \`\`\`):
 {
-  "electronConfiguration": "[He] 2s² 2p² (пример формата)",
-  "electronShells": "2, 4 (числа через запятую)",
-  "oxidationStates": "-4, +2, +4 (пример)",
-  "meltingPoint": "3550 °C (сублимируется)",
-  "boilingPoint": "4827 °C",
-  "density": "2,26 г/см³",
-  "discoveryYear": "Древность",
-  "description": "Напиши 2-3 предложения об этом элементе НА РУССКОМ ЯЗЫКЕ. Опиши его свойства и применение."
-}
+  "electronConfiguration": "электронная конфигурация (например: [He] 2s² 2p²)",
+  "electronShells": "числа через запятую (например: 2, 4)",
+  "oxidationStates": "степени окисления (например: -4, +2, +4)",
+  "meltingPoint": "температура на русском (например: 3550 °C или Сублимируется при 3642 °C)",
+  "boilingPoint": "температура на русском (например: 4827 °C)",
+  "density": "плотность на русском (например: 2,26 г/см³)",
+  "discoveryYear": "год или период на русском (например: Древность или 1774)",
+  "description": "ОБЯЗАТЕЛЬНО НА РУССКОМ: Напиши 2-3 предложения об этом элементе. Опиши что это за элемент, его основные свойства и где применяется. ПИШИ ТОЛЬКО ПО-РУССКИ!"
+}`,
+    en: `You are a chemistry reference. Provide information about the chemical element "${elementName}" in English.
 
-КРИТИЧЕСКИ ВАЖНО: Поле "description" ДОЛЖНО быть написано на РУССКОМ языке!`
-    },
-    en: {
-      systemInstruction: 'You are a chemistry reference. Respond only in English.',
-      prompt: `Provide information about the chemical element "${elementName}".
-
-Return a JSON object with the following fields:
+Return ONLY a JSON object (no markdown, no \`\`\`):
 {
   "electronConfiguration": "electron configuration",
-  "electronShells": "shell distribution as numbers",
-  "oxidationStates": "common oxidation states",
+  "electronShells": "numbers separated by comma",
+  "oxidationStates": "oxidation states",
   "meltingPoint": "melting point with units",
   "boilingPoint": "boiling point with units",
   "density": "density with units",
   "discoveryYear": "year of discovery",
-  "description": "brief description (2-3 sentences)"
-}
+  "description": "2-3 sentences about this element"
+}`,
+    kk: `Сен — қазақ тілді химиялық анықтамалықсың. "${elementName}" химиялық элементі туралы ақпаратты ТЕК ҚАЗАҚ ТІЛІНДЕ бер.
 
-Return ONLY valid JSON.`
-    },
-    kk: {
-      systemInstruction: 'Сен химиялық анықтамалықсың. Тек қазақ тілінде жауап бер. Барлық жауаптар қазақша болуы керек.',
-      prompt: `"${elementName}" химиялық элементі туралы ақпарат бер.
+НАЗАР АУДАР: Жауаптағы БАРЛЫҚ мәтіндік өрістер ҚАЗАҚ тілінде болуы КЕРЕК. Бұл міндетті талап.
 
-Мына өрістері бар JSON объектін қайтар (БАРЛЫҚ мәндер ҚАЗАҚ тілінде):
+ТЕК JSON объектін қайтар (markdown жоқ, \`\`\` жоқ):
 {
-  "electronConfiguration": "[He] 2s² 2p² (формат мысалы)",
-  "electronShells": "2, 4 (үтірмен бөлінген сандар)",
-  "oxidationStates": "-4, +2, +4 (мысал)",
-  "meltingPoint": "3550 °C (сублимацияланады)",
-  "boilingPoint": "4827 °C",
-  "density": "2,26 г/см³",
-  "discoveryYear": "Ежелгі заман",
-  "description": "Осы элемент туралы 2-3 сөйлем ҚАЗАҚ ТІЛІНДЕ жаз. Оның қасиеттері мен қолданылуын сипатта."
-}
-
-ӨТЕ МАҢЫЗДЫ: "description" өрісі ҚАЗАҚ тілінде жазылуы КЕРЕК!`
-    }
+  "electronConfiguration": "электрондық конфигурация (мысалы: [He] 2s² 2p²)",
+  "electronShells": "үтірмен бөлінген сандар (мысалы: 2, 4)",
+  "oxidationStates": "тотығу дәрежелері (мысалы: -4, +2, +4)",
+  "meltingPoint": "температура қазақша (мысалы: 3550 °C немесе 3642 °C-де сублимацияланады)",
+  "boilingPoint": "температура қазақша (мысалы: 4827 °C)",
+  "density": "тығыздық қазақша (мысалы: 2,26 г/см³)",
+  "discoveryYear": "жыл немесе кезең қазақша (мысалы: Ежелгі заман немесе 1774)",
+  "description": "МІНДЕТТІ ТҮРДЕ ҚАЗАҚША: Осы элемент туралы 2-3 сөйлем жаз. Бұл қандай элемент, оның негізгі қасиеттері мен қолданылуын сипатта. ТЕК ҚАЗАҚША ЖАЗ!"
+}`
   };
 
-  const config = langConfig[targetLang];
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
-    systemInstruction: config.systemInstruction
-  });
-
-  const result = await model.generateContent(config.prompt);
+  const result = await model.generateContent(prompts[targetLang]);
   const text = result.response.text();
 
   const jsonMatch = text.match(/\{[\s\S]*\}/);

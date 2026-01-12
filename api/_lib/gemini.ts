@@ -53,126 +53,8 @@ Return ONLY a JSON object with this exact structure:
   }
 }
 
-export async function getElementDetails(elementName: string) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
-
-  const prompt = `Provide detailed information about the chemical element: ${elementName}
-
-Return ONLY a JSON object with this exact structure:
-{
-  "electronConfiguration": "electron configuration",
-  "electronShells": "electron shell distribution",
-  "oxidationStates": "common oxidation states",
-  "meltingPoint": "melting point with units",
-  "boilingPoint": "boiling point with units",
-  "density": "density with units",
-  "discoveryYear": "year of discovery",
-  "description": "brief description"
-}`;
-
-  try {
-    console.log(`[ElementDetails] Using model: ${model.model}, Element: ${elementName}`);
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-    console.log(`[ElementDetails] Raw response: ${text?.substring(0, 100)}...`);
-
-    const jsonMatch = text.match(/\{[\s\S]*\}/);
-    if (!jsonMatch) {
-      console.error('[ElementDetails] Failed to extract JSON from response:', text);
-      throw new Error('Failed to parse response');
-    }
-
-    return JSON.parse(jsonMatch[0]);
-  } catch (error) {
-    console.error('[ElementDetails] Error:', error);
-    throw error;
-  }
-}
-
-export async function compareSubstances(substanceA: string, substanceB: string, language: 'ru' | 'en' | 'kk' = 'ru') {
-  const systemInstructions = {
-    ru: 'Ты химический эксперт. Отвечай ТОЛЬКО на русском языке. Весь текст должен быть на русском.',
-    en: 'You are a chemistry expert. Respond ONLY in English. All text must be in English.',
-    kk: 'Сен химия сарапшысысың. Тек қазақ тілінде жауап бер. Барлық мәтін қазақша болуы керек.'
-  };
-
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
-    systemInstruction: systemInstructions[language]
-  });
-
-  const langMap = {
-    ru: 'Russian',
-    en: 'English',
-    kk: 'Kazakh'
-  };
-
-  const prompt = `Compare these two chemical substances: ${substanceA} and ${substanceB}
-
-Provide a detailed comparison including:
-- Chemical formulas
-- Physical properties
-- Chemical properties
-- Common uses
-- Key differences
-
-Format the response in clear, readable text IN ${langMap[language]}.`;
-
-  try {
-    console.log(`[CompareSubstances] Using model: ${model.model}, Substances: ${substanceA} vs ${substanceB}, Language: ${language}`);
-    const result = await model.generateContent(prompt);
-    const text = result.response.text();
-    console.log(`[CompareSubstances] Raw response: ${text?.substring(0, 100)}...`);
-    
-    return { text, sources: [] };
-  } catch (error) {
-    console.error('[CompareSubstances] Error:', error);
-    throw error;
-  }
-}
-
-export async function solveProblem(problem: string, language: 'ru' | 'en' | 'kk' = 'ru') {
-  const systemInstructions = {
-    ru: 'Ты химический репетитор. Отвечай ТОЛЬКО на русском языке. Все решения и объяснения должны быть на русском.',
-    en: 'You are a chemistry tutor. Respond ONLY in English. All solutions and explanations must be in English.',
-    kk: 'Сен химия репетиторысың. Тек қазақ тілінде жауап бер. Барлық шешімдер мен түсіндірмелер қазақша болуы керек.'
-  };
-
-  const langMap = {
-    ru: 'Russian',
-    en: 'English',
-    kk: 'Kazakh'
-  };
-
-  const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
-    systemInstruction: systemInstructions[language]
-  });
-
-  const prompt = `Solve this chemistry problem step by step: ${problem}
-
-Provide IN ${langMap[language]}:
-1. Problem analysis
-2. Step-by-step solution
-3. Final answer
-4. Brief explanation
-
-Format the response in clear, readable text with proper formatting.`;
-
-  try {
-    console.log(`[SolveProblem] Using model: ${model.model}, Problem length: ${problem.length}, Language: ${language}`);
-    const result = await model.generateContent(prompt);
-    const solution = result.response.text();
-    console.log(`[SolveProblem] Raw response: ${solution?.substring(0, 100)}...`);
-
-    return { solution };
-  } catch (error) {
-    console.error('[SolveProblem] Error:', error);
-    throw error;
-  }
-}
-
-export async function translateElement(elementName: string, targetLang: 'ru' | 'en' | 'kk') {
+// Replaced English-only getElementDetails with strict localized version
+export async function getElementDetails(elementName: string, targetLang: 'ru' | 'en' | 'kk' = 'ru') {
   const systemInstructions = {
     ru: 'Ты русскоязычный химический справочник. Отвечай ТОЛЬКО на русском языке. ВСЕ текстовые поля ДОЛЖНЫ быть на русском. Это ОБЯЗАТЕЛЬНОЕ требование.',
     en: 'You are a chemistry reference. Respond ONLY in English. ALL text fields MUST be in English.',
@@ -227,20 +109,104 @@ Return ONLY a JSON object (no markdown, no \`\`\`):
   };
 
   try {
-    console.log(`[TranslateElement] Using model: ${model.model}, Element: ${elementName}, TargetLang: ${targetLang}`);
+    console.log(`[GetElementDetails] Using model: ${model.model}, Element: ${elementName}, TargetLang: ${targetLang}`);
     const result = await model.generateContent(prompts[targetLang]);
     const text = result.response.text();
-    console.log(`[TranslateElement] Raw response: ${text?.substring(0, 100)}...`);
+    console.log(`[GetElementDetails] Raw response: ${text?.substring(0, 100)}...`);
 
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      console.error('[TranslateElement] Failed to extract JSON from response:', text);
+      console.error('[GetElementDetails] Failed to extract JSON from response:', text);
       throw new Error('Failed to parse response');
     }
 
     return JSON.parse(jsonMatch[0]);
   } catch (error) {
-    console.error('[TranslateElement] Error:', error);
+    console.error('[GetElementDetails] Error:', error);
     throw error;
   }
 }
+
+export async function compareSubstances(substanceA: string, substanceB: string, language: 'ru' | 'en' | 'kk' = 'ru') {
+  const systemInstructions = {
+    ru: 'Ты химический эксперт. Отвечай ТОЛЬКО на русском языке. Весь текст должен быть на русском.',
+    en: 'You are a chemistry expert. Respond ONLY in English. All text must be in English.',
+    kk: 'Сен химия сарапшысысың. Тек қазақ тілінде жауап бер. Барлық мәтін қазақша болуы керек.'
+  };
+
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.5-flash',
+    systemInstruction: systemInstructions[language]
+  });
+
+  const langMap = {
+    ru: 'Russian',
+    en: 'English',
+    kk: 'Kazakh'
+  };
+
+  const prompt = `Compare these two chemical substances: ${substanceA} and ${substanceB}
+
+Provide a detailed comparison including:
+- Chemical formulas
+- Physical properties
+- Chemical properties
+- Common uses
+- Key differences
+
+Format the response in clear, readable text IN ${langMap[language]}.`;
+
+  try {
+    console.log(`[CompareSubstances] Using model: ${model.model}, Substances: ${substanceA} vs ${substanceB}, Language: ${language}`);
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    console.log(`[CompareSubstances] Raw response: ${text?.substring(0, 100)}...`);
+
+    return { text, sources: [] };
+  } catch (error) {
+    console.error('[CompareSubstances] Error:', error);
+    throw error;
+  }
+}
+
+export async function solveProblem(problem: string, language: 'ru' | 'en' | 'kk' = 'ru') {
+  const systemInstructions = {
+    ru: 'Ты химический репетитор. Отвечай ТОЛЬКО на русском языке. Все решения и объяснения должны быть на русском.',
+    en: 'You are a chemistry tutor. Respond ONLY in English. All solutions and explanations must be in English.',
+    kk: 'Сен химия репетиторысың. Тек қазақ тілінде жауап бер. Барлық шешімдер мен түсіндірмелер қазақша болуы керек.'
+  };
+
+  const langMap = {
+    ru: 'Russian',
+    en: 'English',
+    kk: 'Kazakh'
+  };
+
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.5-flash',
+    systemInstruction: systemInstructions[language]
+  });
+
+  const prompt = `Solve this chemistry problem step by step: ${problem}
+
+Provide IN ${langMap[language]}:
+1. Problem analysis
+2. Step-by-step solution
+3. Final answer
+4. Brief explanation
+
+Format the response in clear, readable text with proper formatting.`;
+
+  try {
+    console.log(`[SolveProblem] Using model: ${model.model}, Problem length: ${problem.length}, Language: ${language}`);
+    const result = await model.generateContent(prompt);
+    const solution = result.response.text();
+    console.log(`[SolveProblem] Raw response: ${solution?.substring(0, 100)}...`);
+
+    return { solution };
+  } catch (error) {
+    console.error('[SolveProblem] Error:', error);
+    throw error;
+  }
+}
+

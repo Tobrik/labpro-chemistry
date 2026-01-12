@@ -2,10 +2,9 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { authenticate } from './_lib/auth';
 import {
   balanceEquation,
-  getElementDetails,
+  getElementDetails, // Use this for both direct details and "translation" since it's now localized
   compareSubstances,
-  solveProblem,
-  translateElement
+  solveProblem
 } from './_lib/gemini';
 import { AuthenticatedRequest } from './_lib/types';
 
@@ -34,7 +33,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             return;
           }
           const language = params.language || 'ru';
-          result = await translateElement(params.elementName, language);
+          // Use the now-localized getElementDetails
+          result = await getElementDetails(params.elementName, language);
           break;
 
         case 'balance-equation':
@@ -65,11 +65,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
           break;
 
         case 'translate-element':
+          // Maps to same logic now, for backward compatibility if client calls it
           if (!params.element || !params.targetLang) {
             res.status(400).json({ error: 'Invalid parameters' });
             return;
           }
-          result = await translateElement(params.element, params.targetLang);
+          result = await getElementDetails(params.element, params.targetLang);
           break;
 
         default:

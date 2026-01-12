@@ -143,28 +143,32 @@ Format the response in clear, readable text with proper formatting.`;
 }
 
 export async function translateElement(elementName: string, targetLang: 'ru' | 'en' | 'kk') {
-  // Use gemini-1.5-flash which better supports language instructions
+  const systemInstructions = {
+    ru: 'Ты русскоязычный химический справочник. Отвечай ТОЛЬКО на русском языке. ВСЕ текстовые поля ДОЛЖНЫ быть на русском. Это ОБЯЗАТЕЛЬНОЕ требование.',
+    en: 'You are a chemistry reference. Respond ONLY in English. ALL text fields MUST be in English.',
+    kk: 'Сен қазақ тілді химиялық анықтамалықсың. ТЕК ҚАЗАҚ тілінде жауап бер. БАРЛЫҚ мәтіндік өрістер ҚАЗАҚША болуы КЕРЕК. Бұл МІНДЕТТІ талап.'
+  };
+
   const model = genAI.getGenerativeModel({
-    model: 'gemini-1.5-flash',
+    model: 'gemini-2.5-flash',
+    systemInstruction: systemInstructions[targetLang]
   });
 
   const prompts = {
-    ru: `Ты — русскоязычный химический справочник. Твоя задача — предоставить информацию о химическом элементе "${elementName}" СТРОГО НА РУССКОМ ЯЗЫКЕ.
-
-ВНИМАНИЕ: ВСЕ текстовые поля в ответе ДОЛЖНЫ быть на РУССКОМ языке. Это обязательное требование.
+    ru: `Предоставь информацию о химическом элементе "${elementName}" НА РУССКОМ ЯЗЫКЕ.
 
 Верни ТОЛЬКО JSON объект (без markdown, без \`\`\`):
 {
   "electronConfiguration": "электронная конфигурация (например: [He] 2s² 2p²)",
   "electronShells": "числа через запятую (например: 2, 4)",
   "oxidationStates": "степени окисления (например: -4, +2, +4)",
-  "meltingPoint": "температура на русском (например: 3550 °C или Сублимируется при 3642 °C)",
-  "boilingPoint": "температура на русском (например: 4827 °C)",
-  "density": "плотность на русском (например: 2,26 г/см³)",
-  "discoveryYear": "год или период на русском (например: Древность или 1774)",
-  "description": "ОБЯЗАТЕЛЬНО НА РУССКОМ: Напиши 2-3 предложения об этом элементе. Опиши что это за элемент, его основные свойства и где применяется. ПИШИ ТОЛЬКО ПО-РУССКИ!"
+  "meltingPoint": "температура плавления (например: 3550 °C)",
+  "boilingPoint": "температура кипения (например: 4827 °C)",
+  "density": "плотность (например: 2,26 г/см³)",
+  "discoveryYear": "год открытия (например: Древность или 1774)",
+  "description": "2-3 предложения об этом элементе НА РУССКОМ ЯЗЫКЕ"
 }`,
-    en: `You are a chemistry reference. Provide information about the chemical element "${elementName}" in English.
+    en: `Provide information about the chemical element "${elementName}" in English.
 
 Return ONLY a JSON object (no markdown, no \`\`\`):
 {
@@ -175,22 +179,20 @@ Return ONLY a JSON object (no markdown, no \`\`\`):
   "boilingPoint": "boiling point with units",
   "density": "density with units",
   "discoveryYear": "year of discovery",
-  "description": "2-3 sentences about this element"
+  "description": "2-3 sentences about this element in English"
 }`,
-    kk: `Сен — қазақ тілді химиялық анықтамалықсың. "${elementName}" химиялық элементі туралы ақпаратты ТЕК ҚАЗАҚ ТІЛІНДЕ бер.
-
-НАЗАР АУДАР: Жауаптағы БАРЛЫҚ мәтіндік өрістер ҚАЗАҚ тілінде болуы КЕРЕК. Бұл міндетті талап.
+    kk: `"${elementName}" химиялық элементі туралы ақпаратты ҚАЗАҚ ТІЛІНДЕ бер.
 
 ТЕК JSON объектін қайтар (markdown жоқ, \`\`\` жоқ):
 {
   "electronConfiguration": "электрондық конфигурация (мысалы: [He] 2s² 2p²)",
   "electronShells": "үтірмен бөлінген сандар (мысалы: 2, 4)",
   "oxidationStates": "тотығу дәрежелері (мысалы: -4, +2, +4)",
-  "meltingPoint": "температура қазақша (мысалы: 3550 °C немесе 3642 °C-де сублимацияланады)",
-  "boilingPoint": "температура қазақша (мысалы: 4827 °C)",
-  "density": "тығыздық қазақша (мысалы: 2,26 г/см³)",
-  "discoveryYear": "жыл немесе кезең қазақша (мысалы: Ежелгі заман немесе 1774)",
-  "description": "МІНДЕТТІ ТҮРДЕ ҚАЗАҚША: Осы элемент туралы 2-3 сөйлем жаз. Бұл қандай элемент, оның негізгі қасиеттері мен қолданылуын сипатта. ТЕК ҚАЗАҚША ЖАЗ!"
+  "meltingPoint": "балқу температурасы (мысалы: 3550 °C)",
+  "boilingPoint": "қайнау температурасы (мысалы: 4827 °C)",
+  "density": "тығыздығы (мысалы: 2,26 г/см³)",
+  "discoveryYear": "ашылған жылы (мысалы: Ежелгі заман немесе 1774)",
+  "description": "Осы элемент туралы 2-3 сөйлем ҚАЗАҚ ТІЛІНДЕ жаз"
 }`
   };
 

@@ -16,7 +16,7 @@ export async function balanceEquation(equation: string, language: 'ru' | 'en' | 
   };
 
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-2.5-pro',
     systemInstruction: systemInstructions[language]
   });
 
@@ -62,7 +62,7 @@ export async function getElementDetails(elementName: string, targetLang: 'ru' | 
   };
 
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-2.5-pro',
     systemInstruction: systemInstructions[targetLang]
   });
 
@@ -135,7 +135,7 @@ export async function compareSubstances(substanceA: string, substanceB: string, 
   };
 
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-2.5-pro',
     systemInstruction: systemInstructions[language]
   });
 
@@ -183,7 +183,7 @@ export async function solveProblem(problem: string, language: 'ru' | 'en' | 'kk'
   };
 
   const model = genAI.getGenerativeModel({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-2.5-pro',
     systemInstruction: systemInstructions[language]
   });
 

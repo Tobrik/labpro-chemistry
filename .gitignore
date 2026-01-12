@@ -41,3 +41,7 @@ src/config/firebase.ts
 
 .vercel
 .vercel_build_output
+
+# Compiled JS files in API (use TypeScript source)
+api/**/*.js
+api/*.js

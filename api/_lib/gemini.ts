@@ -34,15 +34,23 @@ Return ONLY a JSON object with this exact structure:
   "explanation": "brief explanation of how it was balanced IN ${langMap[language]}"
 }`;
 
-  const result = await model.generateContent(prompt);
-  const text = result.response.text();
+  try {
+    console.log(`[BalanceEquation] Using model: ${model.model}, Language: ${language}`);
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    console.log(`[BalanceEquation] Raw response: ${text?.substring(0, 100)}...`);
 
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse response');
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error('[BalanceEquation] Failed to extract JSON from response:', text);
+      throw new Error('Failed to parse response');
+    }
+
+    return JSON.parse(jsonMatch[0]);
+  } catch (error) {
+    console.error('[BalanceEquation] Error:', error);
+    throw error;
   }
-
-  return JSON.parse(jsonMatch[0]);
 }
 
 export async function getElementDetails(elementName: string) {
@@ -62,15 +70,23 @@ Return ONLY a JSON object with this exact structure:
   "description": "brief description"
 }`;
 
-  const result = await model.generateContent(prompt);
-  const text = result.response.text();
+  try {
+    console.log(`[ElementDetails] Using model: ${model.model}, Element: ${elementName}`);
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    console.log(`[ElementDetails] Raw response: ${text?.substring(0, 100)}...`);
 
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse response');
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error('[ElementDetails] Failed to extract JSON from response:', text);
+      throw new Error('Failed to parse response');
+    }
+
+    return JSON.parse(jsonMatch[0]);
+  } catch (error) {
+    console.error('[ElementDetails] Error:', error);
+    throw error;
   }
-
-  return JSON.parse(jsonMatch[0]);
 }
 
 export async function compareSubstances(substanceA: string, substanceB: string, language: 'ru' | 'en' | 'kk' = 'ru') {
@@ -102,10 +118,17 @@ Provide a detailed comparison including:
 
 Format the response in clear, readable text IN ${langMap[language]}.`;
 
-  const result = await model.generateContent(prompt);
-  const text = result.response.text();
-
-  return { text, sources: [] };
+  try {
+    console.log(`[CompareSubstances] Using model: ${model.model}, Substances: ${substanceA} vs ${substanceB}, Language: ${language}`);
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    console.log(`[CompareSubstances] Raw response: ${text?.substring(0, 100)}...`);
+    
+    return { text, sources: [] };
+  } catch (error) {
+    console.error('[CompareSubstances] Error:', error);
+    throw error;
+  }
 }
 
 export async function solveProblem(problem: string, language: 'ru' | 'en' | 'kk' = 'ru') {
@@ -136,10 +159,17 @@ Provide IN ${langMap[language]}:
 
 Format the response in clear, readable text with proper formatting.`;
 
-  const result = await model.generateContent(prompt);
-  const solution = result.response.text();
+  try {
+    console.log(`[SolveProblem] Using model: ${model.model}, Problem length: ${problem.length}, Language: ${language}`);
+    const result = await model.generateContent(prompt);
+    const solution = result.response.text();
+    console.log(`[SolveProblem] Raw response: ${solution?.substring(0, 100)}...`);
 
-  return { solution };
+    return { solution };
+  } catch (error) {
+    console.error('[SolveProblem] Error:', error);
+    throw error;
+  }
 }
 
 export async function translateElement(elementName: string, targetLang: 'ru' | 'en' | 'kk') {
@@ -196,13 +226,21 @@ Return ONLY a JSON object (no markdown, no \`\`\`):
 }`
   };
 
-  const result = await model.generateContent(prompts[targetLang]);
-  const text = result.response.text();
+  try {
+    console.log(`[TranslateElement] Using model: ${model.model}, Element: ${elementName}, TargetLang: ${targetLang}`);
+    const result = await model.generateContent(prompts[targetLang]);
+    const text = result.response.text();
+    console.log(`[TranslateElement] Raw response: ${text?.substring(0, 100)}...`);
 
-  const jsonMatch = text.match(/\{[\s\S]*\}/);
-  if (!jsonMatch) {
-    throw new Error('Failed to parse response');
+    const jsonMatch = text.match(/\{[\s\S]*\}/);
+    if (!jsonMatch) {
+      console.error('[TranslateElement] Failed to extract JSON from response:', text);
+      throw new Error('Failed to parse response');
+    }
+
+    return JSON.parse(jsonMatch[0]);
+  } catch (error) {
+    console.error('[TranslateElement] Error:', error);
+    throw error;
   }
-
-  return JSON.parse(jsonMatch[0]);
 }

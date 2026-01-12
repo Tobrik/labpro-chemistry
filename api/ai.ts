@@ -14,6 +14,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
+  console.log('[AI Handler] Received request:', {
+    url: req.url,
+    method: req.method,
+    bodyAction: req.body?.action
+  });
+
   const authReq = req as AuthenticatedRequest;
 
   await authenticate(authReq, res, async () => {

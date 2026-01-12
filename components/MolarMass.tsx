@@ -18,57 +18,38 @@ const MolarMass: React.FC = () => {
     if (!input.trim()) return;
 
     try {
+      // Updated regex to properly match elements:
+      // ([A-Z][a-z]?]) matches one uppercase letter optionally followed by ONE lowercase letter
+      // This ensures Cl is matched as a whole, not as C and l separately
+      const regex = /([A-Z][a-z]?)(\d*)/g;
+      let match;
       let totalMass = 0;
       const elements: string[] = [];
-      let i = 0;
+      let validLength = 0;
 
-      while (i < input.length) {
-        // Skip if not uppercase letter (start of element)
-        if (!/[A-Z]/.test(input[i])) {
-          throw new Error(t('molarMass.invalidFormula'));
-        }
+      while ((match = regex.exec(input)) !== null) {
+        const element = match[1];
+        const count = match[2] ? parseInt(match[2]) : 1;
 
-        let element = input[i];
-        let nextChar = input[i + 1];
+        validLength += match[0].length;
 
-        // Check if next char is lowercase - forms a two-letter element
-        if (nextChar && /[a-z]/.test(nextChar)) {
-          const twoLetterElement = element + nextChar;
-          if (ATOMIC_MASSES[twoLetterElement]) {
-            element = twoLetterElement;
-            i += 2;
-          } else if (ATOMIC_MASSES[element]) {
-            // Single letter element exists, use it
-            i += 1;
-          } else {
-            throw new Error(`${t('molarMass.unknownElement')}: ${element}`);
-          }
+        if (ATOMIC_MASSES[element]) {
+          const mass = ATOMIC_MASSES[element] * count;
+          totalMass += mass;
+          elements.push(`${count} × ${element} (${ATOMIC_MASSES[element].toFixed(2)})`);
         } else {
-          // Check single letter element
-          if (ATOMIC_MASSES[element]) {
-            i += 1;
-          } else {
-            throw new Error(`${t('molarMass.unknownElement')}: ${element}`);
-          }
+          throw new Error(`Неизвестный элемент: ${element}`);
         }
+      }
 
-        // Parse the count (digits after element)
-        let countStr = '';
-        while (i < input.length && /\d/.test(input[i])) {
-          countStr += input[i];
-          i++;
-        }
-        const count = countStr ? parseInt(countStr) : 1;
-
-        const mass = ATOMIC_MASSES[element] * count;
-        totalMass += mass;
-        elements.push(`${count} × ${element} (${ATOMIC_MASSES[element].toFixed(2)})`);
+      if (validLength !== input.length) {
+         throw new Error("Неверные символы в формуле");
       }
 
       setResult(totalMass);
       setBreakdown(elements);
     } catch (err: any) {
-      setError(err.message || t('molarMass.invalidFormula'));
+      setError(err.message || "Неверная химическая формула");
     }
   };
 
@@ -124,7 +105,7 @@ const MolarMass: React.FC = () => {
           </div>
 
           <div className="mt-4 pt-4 border-t border-slate-200 dark:border-zinc-700">
-            <p className="text-sm text-slate-400 dark:text-zinc-500 mb-2">{t('molarMass.composition')}</p>
+            <p className="text-sm text-slate-400 dark:text-zinc-500 mb-2">Composition</p>
             <div className="flex flex-wrap gap-2">
               {breakdown.map((item, idx) => (
                 <span key={idx} className="px-3 py-1 bg-white dark:bg-zinc-700 border border-slate-200 dark:border-zinc-600 rounded-full text-xs font-medium text-slate-600 dark:text-zinc-300 shadow-sm">

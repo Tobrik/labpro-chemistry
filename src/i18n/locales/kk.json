@@ -63,10 +63,7 @@
     "substanceA": "Зат A",
     "substanceB": "Зат B",
     "compare": "Салыстыру",
-    "result": "Нәтиже",
-    "placeholderA": "мысалы, Алтын",
-    "placeholderB": "мысалы, Күміс",
-    "sources": "Дереккөздер"
+    "result": "Нәтиже"
   },
   "aiBalancer": {
     "title": "AI Реакция теңестіргіші",
@@ -75,8 +72,7 @@
     "placeholder": "мысалы: Fe + O2 = Fe2O3",
     "balance": "Теңестіру",
     "result": "Теңдеу теңестірілді",
-    "explanation": "Түсініктеме",
-    "oxidationStates": "Тотығу дәрежелері"
+    "explanation": "Түсініктеме"
   },
   "trainer": {
     "title": "Химиялық жаттықтырғыш",
@@ -109,6 +105,17 @@
     "filters": "Сүзгілер",
     "category": "Санат",
     "allCategories": "Барлық санаттар",
+    "period": "Период",
+    "nonMetal": "Бейметалл",
+    "nobleGas": "Асыл газ",
+    "alkaliMetal": "Сілтілік металл",
+    "alkalineEarthMetal": "Сілтілік жер металы",
+    "metalloid": "Металлоид",
+    "halogen": "Галоген",
+    "transitionMetal": "Өтпелі металл",
+    "postTransitionMetal": "Өтпелі емес металл",
+    "lanthanide": "Лантаноид",
+    "actinide": "Актиноид",
     "electronConfiguration": "Электрондық конфигурация",
     "electronShells": "Электрондық қабықтар",
     "oxidationStates": "Тотығу дәрежелері",
@@ -120,29 +127,16 @@
     "physicalProperties": "Физикалық қасиеттер",
     "info": "Ақпарат",
     "history": "Тарих",
-    "period": "Период",
-    "categories": {
-      "non-metal": "Бейметалл",
-      "noble-gas": "Асыл газ",
-      "alkali-metal": "Сілтілік металл",
-      "alkaline-earth-metal": "Сілтілік-жер",
-      "metalloid": "Металлоид",
-      "halogen": "Галоген",
-      "transition-metal": "Өтпелі металл",
-      "post-transition-metal": "Өтпелі кейінгі",
-      "lanthanide": "Лантаноид",
-      "actinide": "Актиноид"
-    }
+    "discoveryOfElement": "Элементтің ашылуы",
+    "modernEra": "Қазіргі заман",
+    "widelyUsed": "Өнеркәсіп пен ғылымда кеңінен қолданылады"
   },
   "molarMass": {
     "title": "Молярлық масса",
     "subtitle": "Заттың молярлық массасын есептеу",
     "formula": "Химиялық формула",
     "placeholder": "мысалы: H2O, NaCl, Ca(OH)2",
-    "result": "Есептеу нәтижесі",
-    "composition": "Құрам",
-    "unknownElement": "Белгісіз элемент",
-    "invalidFormula": "Қате химиялық формула"
+    "result": "Есептеу нәтижесі"
   },
   "solutions": {
     "title": "Ерітінділер және сұйылту",

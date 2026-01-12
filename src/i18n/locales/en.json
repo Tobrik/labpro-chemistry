@@ -63,10 +63,7 @@
     "substanceA": "Substance A",
     "substanceB": "Substance B",
     "compare": "Compare",
-    "result": "Result",
-    "placeholderA": "e.g., Gold",
-    "placeholderB": "e.g., Silver",
-    "sources": "Sources"
+    "result": "Result"
   },
   "aiBalancer": {
     "title": "AI Equation Balancer",
@@ -75,8 +72,7 @@
     "placeholder": "e.g.: Fe + O2 = Fe2O3",
     "balance": "Balance",
     "result": "Equation balanced",
-    "explanation": "Explanation",
-    "oxidationStates": "Oxidation States"
+    "explanation": "Explanation"
   },
   "trainer": {
     "title": "Chemistry Trainer",
@@ -109,6 +105,17 @@
     "filters": "Filters",
     "category": "Category",
     "allCategories": "All categories",
+    "period": "Period",
+    "nonMetal": "Non-metal",
+    "nobleGas": "Noble gas",
+    "alkaliMetal": "Alkali metal",
+    "alkalineEarthMetal": "Alkaline earth metal",
+    "metalloid": "Metalloid",
+    "halogen": "Halogen",
+    "transitionMetal": "Transition metal",
+    "postTransitionMetal": "Post-transition metal",
+    "lanthanide": "Lanthanide",
+    "actinide": "Actinide",
     "electronConfiguration": "Electron configuration",
     "electronShells": "Electron shells",
     "oxidationStates": "Oxidation states",
@@ -120,29 +127,16 @@
     "physicalProperties": "Physical Properties",
     "info": "Info",
     "history": "History",
-    "period": "Period",
-    "categories": {
-      "non-metal": "Non-metal",
-      "noble-gas": "Noble gas",
-      "alkali-metal": "Alkali metal",
-      "alkaline-earth-metal": "Alkaline earth",
-      "metalloid": "Metalloid",
-      "halogen": "Halogen",
-      "transition-metal": "Transition metal",
-      "post-transition-metal": "Post-transition",
-      "lanthanide": "Lanthanide",
-      "actinide": "Actinide"
-    }
+    "discoveryOfElement": "Discovery of element",
+    "modernEra": "Modern era",
+    "widelyUsed": "Widely used in industry and science"
   },
   "molarMass": {
     "title": "Molar Mass",
     "subtitle": "Calculate molar mass",
     "formula": "Chemical formula",
     "placeholder": "e.g.: H2O, NaCl, Ca(OH)2",
-    "result": "Calculation result",
-    "composition": "Composition",
-    "unknownElement": "Unknown element",
-    "invalidFormula": "Invalid chemical formula"
+    "result": "Calculation result"
   },
   "solutions": {
     "title": "Solutions and Dilutions",

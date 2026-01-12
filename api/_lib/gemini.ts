@@ -9,7 +9,16 @@ if (!apiKey) {
 const genAI = new GoogleGenerativeAI(apiKey);
 
 export async function balanceEquation(equation: string, language: 'ru' | 'en' | 'kk' = 'ru') {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+  const systemInstructions = {
+    ru: 'Ты химический помощник. Отвечай ТОЛЬКО на русском языке. Все объяснения должны быть на русском.',
+    en: 'You are a chemistry assistant. Respond ONLY in English. All explanations must be in English.',
+    kk: 'Сен химия көмекшісісің. Тек қазақ тілінде жауап бер. Барлық түсіндірмелер қазақша болуы керек.'
+  };
+
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.5-flash',
+    systemInstruction: systemInstructions[language]
+  });
 
   const langMap = {
     ru: 'Russian',
@@ -18,8 +27,6 @@ export async function balanceEquation(equation: string, language: 'ru' | 'en' | 
   };
 
   const prompt = `Balance this chemical equation: ${equation}
-
-IMPORTANT: Respond in ${langMap[language]} language.
 
 Return ONLY a JSON object with this exact structure:
 {
@@ -67,8 +74,15 @@ Return ONLY a JSON object with this exact structure:
 }
 
 export async function compareSubstances(substanceA: string, substanceB: string, language: 'ru' | 'en' | 'kk' = 'ru') {
+  const systemInstructions = {
+    ru: 'Ты химический эксперт. Отвечай ТОЛЬКО на русском языке. Весь текст должен быть на русском.',
+    en: 'You are a chemistry expert. Respond ONLY in English. All text must be in English.',
+    kk: 'Сен химия сарапшысысың. Тек қазақ тілінде жауап бер. Барлық мәтін қазақша болуы керек.'
+  };
+
   const model = genAI.getGenerativeModel({
     model: 'gemini-2.5-flash',
+    systemInstruction: systemInstructions[language]
   });
 
   const langMap = {
@@ -78,8 +92,6 @@ export async function compareSubstances(substanceA: string, substanceB: string, 
   };
 
   const prompt = `Compare these two chemical substances: ${substanceA} and ${substanceB}
-
-IMPORTANT: Respond ENTIRELY in ${langMap[language]} language.
 
 Provide a detailed comparison including:
 - Chemical formulas
@@ -96,12 +108,27 @@ Format the response in clear, readable text IN ${langMap[language]}.`;
   return { text, sources: [] };
 }
 
-export async function solveProblem(problem: string) {
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+export async function solveProblem(problem: string, language: 'ru' | 'en' | 'kk' = 'ru') {
+  const systemInstructions = {
+    ru: 'Ты химический репетитор. Отвечай ТОЛЬКО на русском языке. Все решения и объяснения должны быть на русском.',
+    en: 'You are a chemistry tutor. Respond ONLY in English. All solutions and explanations must be in English.',
+    kk: 'Сен химия репетиторысың. Тек қазақ тілінде жауап бер. Барлық шешімдер мен түсіндірмелер қазақша болуы керек.'
+  };
+
+  const langMap = {
+    ru: 'Russian',
+    en: 'English',
+    kk: 'Kazakh'
+  };
+
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-2.5-flash',
+    systemInstruction: systemInstructions[language]
+  });
 
   const prompt = `Solve this chemistry problem step by step: ${problem}
 
-Provide:
+Provide IN ${langMap[language]}:
 1. Problem analysis
 2. Step-by-step solution
 3. Final answer

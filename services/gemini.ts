@@ -70,9 +70,9 @@ export const getElementDetailsAI = async (elementName: string, language: 'ru' | 
 /**
  * Solves a chemistry word problem using the backend API
  */
-export const solveProblemAI = async (problem: string): Promise<SolverResult> => {
+export const solveProblemAI = async (problem: string, language: 'ru' | 'en' | 'kk' = 'ru'): Promise<SolverResult> => {
   try {
-    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'solve-problem', problem });
+    return await authenticatedFetch(`${API_BASE}/ai`, { action: 'solve-problem', problem, language });
   } catch (error) {
     console.error("Solver error:", error);
     throw new Error("Failed to solve problem.");

@@ -54,7 +54,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
             res.status(400).json({ error: 'Invalid problem' });
             return;
           }
-          result = await solveProblem(params.problem);
+          const solveLanguage = params.language || 'ru';
+          result = await solveProblem(params.problem, solveLanguage);
           break;
 
         case 'translate-element':

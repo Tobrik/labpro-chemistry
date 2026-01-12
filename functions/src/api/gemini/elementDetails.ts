@@ -5,6 +5,7 @@ import { z } from 'zod';
 
 const elementDetailsSchema = z.object({
   elementName: z.string().min(1).max(50),
+  language: z.enum(['ru', 'en', 'kk']).optional().default('ru'),
 });
 
 export const getElementDetails = async (
@@ -14,10 +15,10 @@ export const getElementDetails = async (
   try {
     // Validate request body
     const validatedData = elementDetailsSchema.parse(req.body);
-    const { elementName } = validatedData as ElementDetailsRequest;
+    const { elementName, language } = validatedData;
 
-    // Call Gemini service
-    const details = await geminiService.getElementDetails(elementName);
+    // Call Gemini service with language parameter
+    const details = await geminiService.getElementDetails(elementName, language);
 
     return res.json(details);
   } catch (error) {

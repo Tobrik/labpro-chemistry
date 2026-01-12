@@ -9,6 +9,7 @@ const balanceEquationSchema = z.object({
     .min(3, 'Equation too short')
     .max(500, 'Equation too long')
     .regex(/^[A-Za-z0-9\s+\->()\[\]=→]+$/, 'Invalid characters in equation'),
+  language: z.enum(['ru', 'en', 'kk']).optional().default('ru'),
 });
 
 export const balanceEquation = async (
@@ -18,10 +19,10 @@ export const balanceEquation = async (
   try {
     // Validate request body
     const validatedData = balanceEquationSchema.parse(req.body);
-    const { equation } = validatedData as BalanceEquationRequest;
+    const { equation, language } = validatedData;
 
-    // Call Gemini service
-    const result = await geminiService.balanceEquation(equation);
+    // Call Gemini service with language parameter
+    const result = await geminiService.balanceEquation(equation, language);
 
     return res.json(result);
   } catch (error) {

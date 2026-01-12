@@ -192,11 +192,12 @@ The answer should be comprehensive in English.`,
   /**
    * Solve chemistry problem using Gemini Pro model
    */
-  async solveProblem(problem: string): Promise<SolveProblemResponse> {
+  async solveProblem(problem: string, language: 'ru' | 'en' | 'kk' = 'ru'): Promise<SolveProblemResponse> {
     try {
       const model = getProModel();
 
-      const prompt = `Реши следующую химическую задачу: ${problem}
+      const prompts = {
+        ru: `Реши следующую химическую задачу: ${problem}
 
 Предоставь решение в формате Markdown со следующими разделами:
 ## Дано:
@@ -211,8 +212,42 @@ The answer should be comprehensive in English.`,
 ## Ответ:
 [финальный ответ]
 
-Будь подробным и понятным.`;
+Будь подробным и понятным. Отвечай на русском языке.`,
+        en: `Solve the following chemistry problem: ${problem}
 
+Provide the solution in Markdown format with the following sections:
+## Given:
+[what is given in the problem]
+
+## Find:
+[what needs to be found]
+
+## Solution:
+[step-by-step solution with explanations]
+
+## Answer:
+[final answer]
+
+Be detailed and clear. Answer in English.`,
+        kk: `Келесі химиялық есепті шешіңіз: ${problem}
+
+Шешімді Markdown форматында келесі бөлімдермен беріңіз:
+## Берілген:
+[есепте не берілген]
+
+## Табу керек:
+[нені табу керек]
+
+## Шешім:
+[түсіндірмелермен қадамдық шешім]
+
+## Жауап:
+[соңғы жауап]
+
+Толық және түсінікті болыңыз. Қазақ тілінде жауап беріңіз.`
+      };
+
+      const prompt = prompts[language];
       const result = await model.generateContent(prompt);
       const response = result.response;
       const text = response.text();

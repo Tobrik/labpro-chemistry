@@ -6,6 +6,7 @@ import { z } from 'zod';
 const compareSubstancesSchema = z.object({
   substanceA: z.string().min(1).max(100),
   substanceB: z.string().min(1).max(100),
+  language: z.enum(['ru', 'en', 'kk']).optional().default('ru'),
 });
 
 export const compareSubstances = async (
@@ -15,10 +16,10 @@ export const compareSubstances = async (
   try {
     // Validate request body
     const validatedData = compareSubstancesSchema.parse(req.body);
-    const { substanceA, substanceB } = validatedData as CompareSubstancesRequest;
+    const { substanceA, substanceB, language } = validatedData;
 
-    // Call Gemini service
-    const result = await geminiService.compareSubstances(substanceA, substanceB);
+    // Call Gemini service with language parameter
+    const result = await geminiService.compareSubstances(substanceA, substanceB, language);
 
     return res.json(result);
   } catch (error) {

@@ -5,6 +5,7 @@ import { z } from 'zod';
 
 const solveProblemSchema = z.object({
   problem: z.string().min(10).max(2000),
+  language: z.enum(['ru', 'en', 'kk']).optional().default('ru'),
 });
 
 export const solveProblem = async (
@@ -14,10 +15,10 @@ export const solveProblem = async (
   try {
     // Validate request body
     const validatedData = solveProblemSchema.parse(req.body);
-    const { problem } = validatedData as SolveProblemRequest;
+    const { problem, language } = validatedData;
 
-    // Call Gemini service
-    const result = await geminiService.solveProblem(problem);
+    // Call Gemini service with language parameter
+    const result = await geminiService.solveProblem(problem, language);
 
     return res.json(result);
   } catch (error) {

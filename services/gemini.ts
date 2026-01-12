@@ -60,6 +60,7 @@ export const compareSubstancesAI = async (substanceA: string, substanceB: string
  */
 export const getElementDetailsAI = async (elementName: string, language: 'ru' | 'en' | 'kk' = 'ru'): Promise<DetailedElementData> => {
   try {
+    console.log('[GeminiService] Fetching element details:', { elementName, language });
     return await authenticatedFetch(`${API_BASE}/ai`, { action: 'element-details', elementName, language });
   } catch (error) {
     console.error("Element Details error:", error);

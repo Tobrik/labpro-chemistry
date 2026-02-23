@@ -26,7 +26,6 @@ functions/lib/
 .env.production
 firebase-adminsdk-*.json
 service-account-*.json
-src/config/firebase.ts
 
 # Editor directories and files
 .vscode/*

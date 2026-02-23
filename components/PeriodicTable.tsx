@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Info, Atom, Thermometer, Layers, Clock, Loader2, X, History, Orbit } from 'lucide-react';
-import { PERIODIC_ELEMENTS } from '../constants';
 import { ElementData, ElementCategory, DetailedElementData } from '../types';
-import { getElementDetailsAI } from '../services/gemini';
+import { useElements } from '../src/contexts/ElementsContext';
+import { getElementDetailsAI } from '../services/ai';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../src/contexts/LanguageContext';
 import { getElementName } from '../constants-elements-i18n';
@@ -10,6 +10,7 @@ import { getElementName } from '../constants-elements-i18n';
 const PeriodicTable: React.FC = () => {
   const { t } = useTranslation();
   const { currentLanguage } = useLanguage();
+  const { elements: PERIODIC_ELEMENTS } = useElements();
   const [filter, setFilter] = useState<ElementCategory | 'all'>('all');
   const [periodFilter, setPeriodFilter] = useState<number | 'all'>('all');
   const [search, setSearch] = useState('');

@@ -1,0 +1,36 @@
+import { Response } from 'express';
+import { AuthenticatedRequest, SolveProblemRequest } from '../../types';
+import { llmService } from '../../services/llmService';
+import { z } from 'zod';
+
+const solveProblemSchema = z.object({
+  problem: z.string().min(10).max(2000),
+  language: z.enum(['ru', 'en', 'kk']).optional().default('ru'),
+});
+
+export const solveProblem = async (
+  req: AuthenticatedRequest,
+  res: Response
+) => {
+  try {
+    // Validate request body
+    const validatedData = solveProblemSchema.parse(req.body);
+    const { problem, language } = validatedData;
+
+    const result = await llmService.solveProblem(problem, language);
+
+    return res.json(result);
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return res.status(400).json({
+        error: 'Validation error',
+        details: error.errors,
+      });
+    }
+
+    console.error('Error in solveProblem:', error);
+    return res.status(500).json({
+      error: 'Failed to solve problem',
+    });
+  }
+};

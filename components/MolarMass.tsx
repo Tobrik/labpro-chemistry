@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { ATOMIC_MASSES } from '../constants';
+import { useElements } from '../src/contexts/ElementsContext';
 import { Beaker, ArrowRight, AlertCircle } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 
 const MolarMass: React.FC = () => {
   const { t } = useTranslation();
+  const { atomicMasses: ATOMIC_MASSES } = useElements();
   const [formula, setFormula] = useState('');
   const [result, setResult] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Dumbbell, Check, X, RefreshCw, Trophy, Medal, Scale, Atom, Crown } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { PERIODIC_ELEMENTS } from '../constants';
 import { ElementData } from '../types';
+import { useElements } from '../src/contexts/ElementsContext';
 import { balanceReaction } from '../chemistryUtils';
 import { useAuth } from '../src/context/AuthContext';
 
@@ -17,6 +17,7 @@ type LeaderboardEntry = {
 const Trainer: React.FC = () => {
   const { t } = useTranslation();
   const { token } = useAuth();
+  const { elements: PERIODIC_ELEMENTS } = useElements();
   const [mode, setMode] = useState<'elements' | 'balancing'>('elements');
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);

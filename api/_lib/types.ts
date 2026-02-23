@@ -29,7 +29,7 @@ export interface UserProgress {
   updatedAt: FirebaseFirestore.Timestamp;
 }
 
-// Gemini API types
+// AI API types
 export interface BalanceEquationRequest {
   equation: string;
 }

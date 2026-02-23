@@ -42,7 +42,7 @@ test.describe('AI Features - With Mock/Test Auth', () => {
 
   test.skip('should balance chemical equation', async ({ page, context }) => {
     // Mock AI API response
-    await page.route('**/api/gemini/balance-equation', async (route) => {
+    await page.route('**/api/ai', async (route) => {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -74,7 +74,7 @@ test.describe('AI Features - With Mock/Test Auth', () => {
 
   test.skip('should solve chemistry problem', async ({ page }) => {
     // Mock AI API response
-    await page.route('**/api/gemini/solve-problem', async (route) => {
+    await page.route('**/api/ai', async (route) => {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -104,7 +104,7 @@ test.describe('AI Features - With Mock/Test Auth', () => {
 
   test.skip('should compare two substances', async ({ page }) => {
     // Mock AI API response
-    await page.route('**/api/gemini/compare-substances', async (route) => {
+    await page.route('**/api/ai', async (route) => {
       await route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -135,7 +135,7 @@ test.describe('AI Features - With Mock/Test Auth', () => {
 
   test.skip('should show loading state during AI request', async ({ page }) => {
     // Delay the mock response to test loading state
-    await page.route('**/api/gemini/balance-equation', async (route) => {
+    await page.route('**/api/ai', async (route) => {
       await new Promise(resolve => setTimeout(resolve, 2000));
       await route.fulfill({
         status: 200,
@@ -167,7 +167,7 @@ test.describe('AI Features - With Mock/Test Auth', () => {
 
   test.skip('should handle AI API errors gracefully', async ({ page }) => {
     // Mock error response
-    await page.route('**/api/gemini/balance-equation', async (route) => {
+    await page.route('**/api/ai', async (route) => {
       await route.fulfill({
         status: 500,
         contentType: 'application/json',

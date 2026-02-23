@@ -41,3 +41,10 @@ src/config/firebase.ts
 
 .vercel
 .vercel_build_output
+
+# Playwright
+playwright-report/
+test-results/
+
+# Claude Code
+.claude/

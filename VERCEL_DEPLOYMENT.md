@@ -13,7 +13,7 @@
 1. **GitHub аккаунт** - для размещения кода
 2. **Vercel аккаунт** - зарегистрируйтесь на [vercel.com](https://vercel.com) через GitHub
 3. **Firebase проект** - для Authentication и Firestore (бесплатный Spark план)
-4. **Google Gemini API ключ** - получите на [aistudio.google.com](https://aistudio.google.com/app/apikey)
+4. **Groq API ключ** - получите на [console.groq.com](https://console.groq.com) (бесплатно)
 
 ## 🔧 Шаг 1: Подготовка Firebase Service Account
 
@@ -70,9 +70,9 @@ git push -u origin main
 
 В настройках проекта Vercel добавьте эти переменные:
 
-#### **GEMINI_API_KEY**
+#### **GROQ_API_KEY**
 ```
-your_gemini_api_key_here
+your_groq_api_key_here
 ```
 
 #### **FIREBASE_PROJECT_ID**
@@ -183,7 +183,7 @@ git push
 ## 🎉 Готово!
 
 Ваш проект теперь работает на Vercel абсолютно бесплатно с полной функциональностью:
-- ✅ AI функции (Gemini)
+- ✅ AI функции (Groq/Llama 3.3)
 - ✅ Аутентификация пользователей
 - ✅ Отслеживание прогресса
 - ✅ Админ панель

@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import { authenticate } from './middleware/auth';
 import { requireAdmin } from './middleware/adminOnly';
 import {
-  geminiRateLimit,
+  aiRateLimit,
   progressRateLimit,
   adminRateLimit,
   authRateLimit,
@@ -15,10 +15,10 @@ import {
 import { errorHandler } from './middleware/errorHandler';
 
 // API endpoints
-import { getElementDetails } from './api/gemini/elementDetails';
-import { balanceEquation } from './api/gemini/balanceEquation';
-import { compareSubstances } from './api/gemini/compareSubstances';
-import { solveProblem } from './api/gemini/solveProblem';
+import { getElementDetails } from './api/ai/elementDetails';
+import { balanceEquation } from './api/ai/balanceEquation';
+import { compareSubstances } from './api/ai/compareSubstances';
+import { solveProblem } from './api/ai/solveProblem';
 
 import { getProgress } from './api/progress/getProgress';
 import { updateXP } from './api/progress/updateXP';
@@ -68,28 +68,28 @@ app.get('/health', (req, res) => {
 app.get('/api/auth/profile', authRateLimit, authenticate, getProfile);
 app.put('/api/auth/profile', authRateLimit, authenticate, updateProfile);
 
-// ===== GEMINI AI ENDPOINTS =====
+// ===== AI ENDPOINTS =====
 app.post(
-  '/api/gemini/element-details',
-  geminiRateLimit,
+  '/api/ai/element-details',
+  aiRateLimit,
   authenticate,
   getElementDetails
 );
 app.post(
-  '/api/gemini/balance-equation',
-  geminiRateLimit,
+  '/api/ai/balance-equation',
+  aiRateLimit,
   authenticate,
   balanceEquation
 );
 app.post(
-  '/api/gemini/compare-substances',
-  geminiRateLimit,
+  '/api/ai/compare-substances',
+  aiRateLimit,
   authenticate,
   compareSubstances
 );
 app.post(
-  '/api/gemini/solve-problem',
-  geminiRateLimit,
+  '/api/ai/solve-problem',
+  aiRateLimit,
   authenticate,
   solveProblem
 );

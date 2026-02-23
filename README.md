@@ -1,38 +1,41 @@
-# 🧪 LABPRO - Chemistry Education Platform
+# LABPRO - Chemistry Education Platform
 
-Интерактивная образовательная платформа по химии с AI-поддержкой от Google Gemini.
+Интерактивная образовательная платформа по химии с AI-поддержкой.
 
-## ✨ Возможности
+## Возможности
 
-- 📊 **Интерактивная таблица Менделеева** с подробной информацией о элементах
-- 🤖 **AI-ассистент** на базе Google Gemini для решения задач и объяснений
-- ⚖️ **Балансировка уравнений** с автоматической проверкой
-- 🎯 **Тренажер элементов** с системой XP и уровней
-- 📈 **Отслеживание прогресса** пользователей
-- 👥 **Аутентификация** с ролями (пользователь/администратор)
-- 📊 **Админ-панель** с аналитикой и управлением пользователями
+- Интерактивная таблица Менделеева с подробной информацией о элементах
+- AI-ассистент (Llama 3.3 через Groq) для решения задач и объяснений
+- Балансировка уравнений с автоматической проверкой
+- Тренажер элементов с системой XP и уровней
+- Отслеживание прогресса пользователей
+- Аутентификация с ролями (пользователь/администратор)
+- Админ-панель с управлением данными в реальном времени
+- Мультиязычность (русский, английский, казахский)
 
-## 🛠 Технологии
+## Технологии
 
 ### Frontend
-- React 19.2.1 + TypeScript + Vite
+- React 19 + TypeScript + Vite
 - Tailwind CSS + Lucide Icons
+- i18next (мультиязычность)
 
 ### Backend
-- Firebase Cloud Functions (Node.js 20 + Express)
+- Vercel Serverless Functions (основной)
+- Firebase Cloud Functions (альтернативный)
 - Firebase Authentication + Firestore Database
-- Google Gemini AI API
+- Groq API (Llama 3.3 70B)
 
 ### Безопасность
 - JWT аутентификация + Rate limiting
 - CORS + Helmet.js + Firestore Security Rules
 
-## 🚀 Установка
+## Установка
 
 ### Предварительные требования
 - Node.js 20+
 - Firebase CLI
-- Google Gemini API ключ
+- Groq API ключ (бесплатно: https://console.groq.com)
 
 ### Шаги
 
@@ -41,20 +44,28 @@
 npm install
 cd functions && npm install && cd ..
 
-# 2. Настройте Firebase
-firebase login
+# 2. Скопируйте файл конфигурации Firebase
+cp src/config/firebase.example.ts src/config/firebase.ts
+# Заполните данные Firebase проекта
 
-# 3. Настройте Gemini API ключ
-firebase functions:config:set gemini.api_key="YOUR_KEY"
+# 3. Создайте .env файл
+cp .env.example .env
+# Заполните GROQ_API_KEY и Firebase credentials
 
 # 4. Запустите локально
 npm run dev
-firebase emulators:start  # в отдельном терминале
 ```
 
-## 📦 Деплой
+### Заполнение Firestore данными
 
-### Вариант 1: Vercel (Рекомендуется - 100% бесплатно)
+```bash
+# Запустите seed-скрипт для загрузки элементов и формул в Firestore
+npx ts-node scripts/seed-firestore.ts
+```
+
+## Деплой
+
+### Vercel (Рекомендуется)
 
 ```bash
 # 1. Загрузите на GitHub
@@ -63,61 +74,62 @@ git push origin main
 # 2. Импортируйте в Vercel через UI
 # Перейдите на vercel.com/new и выберите репозиторий
 
-# 3. Настройте environment variables в Vercel Dashboard
+# 3. Настройте environment variables в Vercel Dashboard:
+#    - GROQ_API_KEY
+#    - FIREBASE_PROJECT_ID
+#    - FIREBASE_CLIENT_EMAIL
+#    - FIREBASE_PRIVATE_KEY
 ```
 
-**Подробная инструкция:** См. [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)
+Подробная инструкция: [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md)
 
-### Вариант 2: Firebase (Требуется Blaze Plan)
+### Firebase (Требуется Blaze Plan)
 
 ```bash
 npm run build
 firebase deploy
 ```
 
-## 🔒 Безопасность
+## Админ-панель
 
-**ВАЖНО:** API ключи защищены `.gitignore`. Никогда не коммитьте секретные данные!
+Доступна для пользователей с ролью `admin`. Включает:
 
-## 🧪 Тестирование
+- **Пользователи**: управление ролями, бан/разбан
+- **Формулы**: CRUD операции в реальном времени (через Firestore)
+- **Элементы**: просмотр данных таблицы Менделеева
+- **Логи**: ссылка на Firebase Console
 
-Проект включает E2E тесты на **Playwright** для Chrome:
+## Безопасность
+
+API ключи защищены `.gitignore`. Никогда не коммитьте секретные данные!
+
+## Тестирование
 
 ```bash
-# Установите браузеры Playwright
 npx playwright install chromium
-
-# Запустите все тесты
-npm test
-
-# Запустите в UI режиме (рекомендуется)
-npm run test:ui
-
-# Запустите с видимым браузером
-npm run test:headed
+npm test            # все тесты
+npm run test:ui     # UI режим
+npm run test:headed # с видимым браузером
 ```
 
-**Покрытие:**
-- ✅ Periodic Table (поиск, фильтрация, модальные окна)
-- ✅ Authentication (вход, регистрация, валидация)
-- ✅ AI Features (UI тесты + mock тесты)
+Подробная документация: [TESTING.md](TESTING.md)
 
-**Подробная документация:** [TESTING.md](TESTING.md)
-
-## 📚 Структура
+## Структура
 
 ```
 labpro/
 ├── src/              # Frontend React app
+│   ├── config/       # Firebase конфигурация
+│   ├── contexts/     # React контексты (Theme, Language, Elements)
+│   └── i18n/         # Переводы (ru, en, kk)
+├── components/       # React компоненты
+├── services/         # Сервисы (Firestore, AI)
 ├── api/              # Vercel Serverless API
-├── functions/src/    # Firebase Cloud Functions (опционально)
+│   └── _lib/         # LLM интеграция, авторизация
+├── functions/        # Firebase Cloud Functions (альтернативный backend)
+├── scripts/          # Утилиты (seed-firestore)
 ├── tests/            # Playwright E2E тесты
-├── firebase.json     # Firebase config
-├── vercel.json       # Vercel config
-└── firestore.rules   # Security rules
+├── firestore.rules   # Правила безопасности Firestore
+├── vercel.json       # Vercel конфигурация
+└── firebase.json     # Firebase конфигурация
 ```
-
-## 👨‍💻 Автор
-
-Создано с помощью Claude Code 🤖
-# Force redeploy  8 дек 2025 г. 19:49:00

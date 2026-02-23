@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { GitCompare, Loader2, Link as LinkIcon, ExternalLink } from 'lucide-react';
-import { compareSubstancesAI } from '../services/gemini';
+import { compareSubstancesAI } from '../services/ai';
 import { ComparisonResult } from '../types';
 import ReactMarkdown from 'react-markdown';
 import { useTranslation } from 'react-i18next';

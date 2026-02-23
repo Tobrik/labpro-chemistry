@@ -18,6 +18,7 @@ import AuthModal from './src/components/AuthModal';
 import { useTranslation } from 'react-i18next';
 import { ThemeProvider, useTheme } from './src/contexts/ThemeContext';
 import { LanguageProvider, useLanguage } from './src/contexts/LanguageContext';
+import { ElementsProvider } from './src/contexts/ElementsContext';
 import './src/i18n/config';
 
 // Simple Error Boundary
@@ -236,7 +237,9 @@ function App() {
     <AuthProvider>
       <LanguageProvider>
         <ThemeProvider>
-          <AppContent />
+          <ElementsProvider>
+            <AppContent />
+          </ElementsProvider>
         </ThemeProvider>
       </LanguageProvider>
     </AuthProvider>

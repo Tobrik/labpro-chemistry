@@ -2,10 +2,10 @@ import { VercelRequest, VercelResponse } from '@vercel/node';
 import { authenticate } from './_lib/auth';
 import {
   balanceEquation,
-  getElementDetails, // Use this for both direct details and "translation" since it's now localized
+  getElementDetails,
   compareSubstances,
   solveProblem
-} from './_lib/gemini';
+} from './_lib/llm';
 import { AuthenticatedRequest } from './_lib/types';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {

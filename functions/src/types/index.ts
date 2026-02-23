@@ -76,7 +76,7 @@ export interface AuthenticatedRequest extends Request {
   };
 }
 
-// Gemini API request/response types
+// AI API request/response types
 export interface BalanceEquationRequest {
   equation: string;
 }

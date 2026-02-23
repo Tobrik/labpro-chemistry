@@ -35,7 +35,7 @@ export const authRateLimit = createRateLimiter({
   message: 'Too many authentication requests. Please try again later.',
 });
 
-export const geminiRateLimit = createRateLimiter({
+export const aiRateLimit = createRateLimiter({
   windowMs: 60 * 1000, // 1 minute
   maxRequests: 20,
   message: 'AI request limit exceeded. Please wait before trying again.',

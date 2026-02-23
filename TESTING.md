@@ -173,7 +173,7 @@ firebase emulators:start
 Playwright позволяет мокировать API запросы:
 
 ```typescript
-await page.route('**/api/gemini/balance-equation', async (route) => {
+await page.route('**/api/ai', async (route) => {
   await route.fulfill({
     status: 200,
     contentType: 'application/json',

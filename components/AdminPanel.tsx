@@ -24,6 +24,7 @@ const AdminPanel: React.FC = () => {
   const [formulas, setFormulas] = useState<FirestoreFormula[]>([]);
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [loadingFormulas, setLoadingFormulas] = useState(true);
+  const [usersError, setUsersError] = useState<string | null>(null);
 
   // New formula form
   const [newFormulaName, setNewFormulaName] = useState('');
@@ -38,8 +39,8 @@ const AdminPanel: React.FC = () => {
   // Subscribe to real-time data
   useEffect(() => {
     const unsubUsers = subscribeToUsers(
-      (data) => { setUsers(data); setLoadingUsers(false); },
-      () => setLoadingUsers(false)
+      (data) => { setUsers(data); setUsersError(null); setLoadingUsers(false); },
+      (err) => { setUsersError(err.message); setLoadingUsers(false); console.error('Users subscription error:', err); }
     );
     const unsubFormulas = subscribeToFormulas(
       (data) => { setFormulas(data); setLoadingFormulas(false); },
@@ -105,6 +106,17 @@ const AdminPanel: React.FC = () => {
             {loadingUsers ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="animate-spin text-slate-400" size={24} />
+              </div>
+            ) : usersError ? (
+              <div className="text-center py-12">
+                <p className="text-red-500 dark:text-red-400 font-medium mb-2">Ошибка загрузки пользователей</p>
+                <p className="text-sm text-red-400 dark:text-red-500 mb-4">{usersError}</p>
+                <button
+                  onClick={() => { setLoadingUsers(true); setUsersError(null); }}
+                  className="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700 transition-colors"
+                >
+                  Повторить
+                </button>
               </div>
             ) : users.length === 0 ? (
               <div className="text-center py-12 text-slate-500 dark:text-zinc-400">

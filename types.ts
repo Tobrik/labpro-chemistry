@@ -1,5 +1,5 @@
 
-export type NavItem = 'periodic-table' | 'trainer' | 'solutions' | 'molar-mass' | 'ph' | 'formulas' | 'solver' | 'thermo' | 'kinetics' | 'molecules' | 'admin';
+export type NavItem = 'periodic-table' | 'trainer' | 'solutions' | 'molar-mass' | 'ph' | 'formulas' | 'solver' | 'reaction-balancer' | 'thermo' | 'kinetics' | 'molecules' | 'admin';
 
 export type ElementCategory = 
   | 'non-metal' 

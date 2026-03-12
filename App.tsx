@@ -1,5 +1,5 @@
 import React, { useState, Component, ErrorInfo, ReactNode } from 'react';
-import { Beaker, Grid, FlaskConical, Droplet, Dumbbell, BookOpen, BrainCircuit, Flame, Timer, Box, ShieldAlert, Moon, Sun } from 'lucide-react';
+import { Beaker, Grid, FlaskConical, Droplet, Dumbbell, BookOpen, BrainCircuit, Flame, Timer, Box, Scale, ShieldAlert, Moon, Sun } from 'lucide-react';
 import MolarMass from './components/MolarMass';
 import PeriodicTable from './components/PeriodicTable';
 import Comparison from './components/Comparison';
@@ -7,6 +7,7 @@ import Trainer from './components/Trainer';
 import SolutionsCalculator from './components/SolutionsCalculator';
 import FormulaReference from './components/FormulaReference';
 import ProblemSolver from './components/ProblemSolver';
+import EquationBalancer from './components/EquationBalancer';
 import AdminPanel from './components/AdminPanel';
 import Thermochemistry from './components/Thermochemistry';
 import Kinetics from './components/Kinetics';
@@ -74,6 +75,7 @@ function AppContent() {
     { id: 'trainer', label: t('nav.trainer'), icon: <Dumbbell size={18} /> },
     { id: 'molar-mass', label: t('nav.molarMass'), icon: <Beaker size={18} /> },
 { id: 'solver', label: t('nav.aiSolver'), icon: <BrainCircuit size={18} /> },
+    { id: 'reaction-balancer', label: t('nav.aiBalancer'), icon: <Scale size={18} /> },
     { id: 'solutions', label: t('nav.solutions'), icon: <FlaskConical size={18} /> },
     { id: 'thermo', label: t('nav.thermochemistry'), icon: <Flame size={18} /> },
     { id: 'kinetics', label: t('nav.kinetics'), icon: <Timer size={18} /> },
@@ -97,6 +99,7 @@ function AppContent() {
       case 'periodic-table': return <PeriodicTable />;
       case 'formulas': return <FormulaReference />;
       case 'solver': return <ProblemSolver />;
+      case 'reaction-balancer': return <EquationBalancer />;
       case 'molar-mass': return <MolarMass />;
       case 'trainer': return <Trainer />;
       case 'solutions': return <SolutionsCalculator />;

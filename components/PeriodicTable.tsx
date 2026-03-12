@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Search, Filter, Info, Atom, Thermometer, Layers, Clock, Loader2, X, History, Orbit } from 'lucide-react';
 import { ElementData, ElementCategory, DetailedElementData } from '../types';
 import { useElements } from '../src/contexts/ElementsContext';
-import { getElementDetailsAI } from '../services/ai';
+import { getElementDetailsFallback } from '../data/element-details';
 import { useTranslation } from 'react-i18next';
 import { useLanguage } from '../src/contexts/LanguageContext';
 import { getElementName } from '../constants-elements-i18n';
@@ -24,16 +24,13 @@ const PeriodicTable: React.FC = () => {
     if (selectedElement) {
       setDetailedInfo(null);
       setDetailsError(null);
-      setLoadingDetails(true);
-      getElementDetailsAI(selectedElement.name, currentLanguage)
-        .then(data => {
-          setDetailedInfo(data);
-          setLoadingDetails(false);
-        })
-        .catch((error) => {
-          setLoadingDetails(false);
-          setDetailsError(error.message || t('errors.authRequired'));
-        });
+      const data = getElementDetailsFallback(selectedElement.symbol, currentLanguage);
+      if (data) {
+        setDetailedInfo(data);
+      } else {
+        setDetailsError(t('common.error'));
+      }
+      setLoadingDetails(false);
     }
   }, [selectedElement, currentLanguage, t]);
 
